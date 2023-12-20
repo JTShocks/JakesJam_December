@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://blt56opdf6dc5"]
+
+[ext_resource type="Script" path="res://Scripts/Buildings/Detector.cs" id="1_75ku0"]
+[ext_resource type="Script" path="res://Scripts/Buildings/Turret_Base.cs" id="1_u4pq7"]
+[ext_resource type="Texture2D" uid="uid://cwk8wrqtybja6" path="res://icon.svg" id="2_8lr7b"]
+[ext_resource type="Script" path="res://Scripts/Buildings/Gun_Weapon.cs" id="2_finuo"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vntr6"]
+
+[node name="Turret" type="Node2D"]
+script = ExtResource("1_u4pq7")
+
+[node name="TurretHead" type="Node2D" parent="."]
+scale = Vector2(0.2, 0.2)
+script = ExtResource("2_finuo")
+
+[node name="TurretSprite" type="Sprite2D" parent="TurretHead"]
+texture = ExtResource("2_8lr7b")
+
+[node name="GunRay" type="RayCast2D" parent="TurretHead"]
+target_position = Vector2(1000, 0)
+collision_mask = 2
+
+[node name="Detector" type="Node2D" parent="."]
+script = ExtResource("1_75ku0")
+
+[node name="DetectionArea" type="Area2D" parent="Detector"]
+collision_layer = 0
+collision_mask = 3
+
+[node name="DetectorShape" type="CollisionShape2D" parent="Detector/DetectionArea"]
+scale = Vector2(20, 20)
+shape = SubResource("CircleShape2D_vntr6")
+
+[connection signal="EnemyEnterRange" from="Detector" to="." method="OnTargetEnterRange"]
+[connection signal="EnemyLeaveRange" from="Detector" to="." method="OnTargetLeaveRange"]
+[connection signal="body_entered" from="Detector/DetectionArea" to="Detector" method="_on_detection_area_body_entered"]
+[connection signal="body_exited" from="Detector/DetectionArea" to="Detector" method="_on_detection_area_body_exited"]

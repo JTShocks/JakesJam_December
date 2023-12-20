@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=3 uid="uid://c7ml3peoafg3h"]
+
+[ext_resource type="Script" path="res://Scripts/PlayerMovement.cs" id="1_2f3oi"]
+[ext_resource type="Texture2D" uid="uid://cwk8wrqtybja6" path="res://icon.svg" id="1_3mguj"]
+[ext_resource type="Script" path="res://Scripts/CharacterData.cs" id="3_338qo"]
+[ext_resource type="Script" path="res://Player/PlayerWeaponController.cs" id="4_3xtjs"]
+[ext_resource type="Script" path="res://Scripts/Buildings/Gun_Weapon.cs" id="5_rp2qw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4fjwr"]
+size = Vector2(65, 59)
+
+[node name="Player" type="Node2D"]
+
+[node name="PlayerBody" type="CharacterBody2D" parent="."]
+collision_mask = 15
+script = ExtResource("1_2f3oi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBody"]
+shape = SubResource("RectangleShape2D_4fjwr")
+
+[node name="Sprite2D" type="Sprite2D" parent="PlayerBody"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_3mguj")
+
+[node name="PlayerCamera" type="Camera2D" parent="PlayerBody"]
+
+[node name="CharacterData" type="Node" parent="PlayerBody"]
+script = ExtResource("3_338qo")
+
+[node name="PlayerHead" type="Node2D" parent="PlayerBody"]
+script = ExtResource("4_3xtjs")
+
+[node name="Sprite2D" type="Sprite2D" parent="PlayerBody/PlayerHead"]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_3mguj")
+
+[node name="GunWeapon" type="Node2D" parent="PlayerBody/PlayerHead"]
+script = ExtResource("5_rp2qw")
+
+[node name="GunRay" type="RayCast2D" parent="PlayerBody/PlayerHead/GunWeapon"]
+target_position = Vector2(500, 0)
+collision_mask = 6
