@@ -1,17 +1,23 @@
 using Godot;
 using System;
 
-public partial class CharacterData : Node
+public partial class CharacterData : Resource
 {
 	[Export]
 	public Faction _characterFaction;
 	[Export]
-	public int maxHealth {get; set;} = 100;
+	public int MaxHealth {get; set;}
+    [Export]
+    public int MoveSpeed {get; set;}
 
 
-    public override void _Ready()
+    public CharacterData() : this(0, 400, 0){}
+
+    public CharacterData(int health, int moveSpeed, Faction faction)
     {
-        base._Ready();
+        MaxHealth = health;
+        MoveSpeed = moveSpeed;
+        _characterFaction = faction;
     }
 
 

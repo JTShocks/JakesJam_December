@@ -23,7 +23,7 @@ public partial class Detector : Node
 
     public void _on_detection_area_body_entered(PhysicsBody2D body)
     {
-       GD.Print("Target entered of Faction: " + body.GetNode<CharacterData>("CharacterData")._characterFaction.ToString());
+       
 
         EmitSignal("EnemyEnterRange", body);
         //Can always put enemies on a different collision layer, so the player is always ignored

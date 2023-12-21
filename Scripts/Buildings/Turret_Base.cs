@@ -2,8 +2,10 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class Turret_Base : Node2D, IBuilding
+public partial class Turret_Base : Node2D, IBuilding, ITakeDamage
 {
+
+	public delegate void OnTurretDestroyedEventHandler();
 
 	int baseDamage = 5;
 	float shootIntervalInSeconds = .33f;
@@ -15,6 +17,10 @@ public partial class Turret_Base : Node2D, IBuilding
 	bool hasTargets;
 	bool timerHasStarted;
 	Timer turretShootTimer = new();
+	[Export]
+	public BuildingStats baseStats;
+
+	int currentHealth {get; set;}
 
 
 	Node2D turretHead;
@@ -22,6 +28,8 @@ public partial class Turret_Base : Node2D, IBuilding
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		baseStats = new BuildingStats(5, 100);
+		currentHealth = baseStats.BaseHealth;
 		turretHead = GetNode<Node2D>("TurretHead");
 		turretWeapon = GetNode<Node2D>("TurretHead") as IDoDamage;
 		AddChild(turretShootTimer);
@@ -59,19 +67,9 @@ public partial class Turret_Base : Node2D, IBuilding
 
 	}
 
-    public void PickUpBuilding()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void PlaceBuilding()
-    {
-        throw new NotImplementedException();
-    }
-
 	public void OnTargetEnterRange(PhysicsBody2D target)
 	{
-		if(target.GetNode<CharacterData>("CharacterData")._characterFaction == turretOwner)
+		if(target is PlayerMovement player)
 		{
 			//Ignore whatever faction owns the turret
 			GD.Print("Owner is in range");
@@ -125,6 +123,30 @@ public partial class Turret_Base : Node2D, IBuilding
 			timerHasStarted = true;
 		}
 
+	}
+
+    public void UpgradeBuilding()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void RepairBuilding()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+		if(currentHealth <= 0)
+		{
+			Kill();
+		}
+    }
+
+	public void Kill()
+	{
+			GD.Print("Turret has been destroyed");
 	}
 
 }

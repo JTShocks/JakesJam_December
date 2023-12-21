@@ -1,7 +1,7 @@
 
 public interface IBuilding
 {
-    public void PickUpBuilding();
-    public void PlaceBuilding();
+    void UpgradeBuilding();
+    void RepairBuilding();
 
 }
