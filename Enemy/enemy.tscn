@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://bxrfqarbk6l2k"]
+
+[ext_resource type="Script" path="res://Enemy/Enemy_Base.cs" id="1_bw2rx"]
+[ext_resource type="Resource" uid="uid://bpuhls5gik1e0" path="res://Enemy/EnemyStats.tres" id="2_4is35"]
+[ext_resource type="Texture2D" uid="uid://cwk8wrqtybja6" path="res://icon.svg" id="2_sw2tv"]
+[ext_resource type="Script" path="res://Player/HealthSystem.cs" id="3_lsa5r"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bedc1"]
+size = Vector2(65, 68)
+
+[node name="Enemy" type="Node2D"]
+
+[node name="EnemyBody" type="CharacterBody2D" parent="." groups=["Aliens", "PlayerBuilding"]]
+collision_layer = 2
+collision_mask = 15
+script = ExtResource("1_bw2rx")
+characterStats = ExtResource("2_4is35")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyBody"]
+position = Vector2(0.5, 1)
+shape = SubResource("RectangleShape2D_bedc1")
+
+[node name="Sprite2D" type="Sprite2D" parent="EnemyBody"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_sw2tv")
+
+[node name="HealthSystem" type="Node" parent="EnemyBody"]
+script = ExtResource("3_lsa5r")

@@ -3,10 +3,13 @@ using System;
 
 public partial class Enemy_Base : CharacterBody2D, ITakeDamage
 {
-    const int moveSpeed = 100;
+    int moveSpeed {get; set;}
 
     CharacterBody2D player;
     HealthSystem healthSystem;
+
+    [Export]
+    public Resource characterStats;
     //Enemy behavior
     //Should first converge towards the core (the center of the map where things are built)
     //If they get in range of a turret/building, they move toward that building
@@ -19,6 +22,10 @@ public partial class Enemy_Base : CharacterBody2D, ITakeDamage
     public override void _Ready()
     {
         AddToGroup("Aliens");
+        if(characterStats is CharacterData stats)
+        {
+            moveSpeed = stats.MoveSpeed;
+        }
         healthSystem = GetNode<HealthSystem>("HealthSystem");
         base._Ready();
         

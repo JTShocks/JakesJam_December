@@ -71,7 +71,7 @@ public partial class Turret_Base : Node2D, IBuilding
 
 	public void OnTargetEnterRange(PhysicsBody2D target)
 	{
-		if(target.GetNode<CharacterData>("CharacterData")._characterFaction == turretOwner)
+		if(target is PlayerMovement player)
 		{
 			//Ignore whatever faction owns the turret
 			GD.Print("Owner is in range");

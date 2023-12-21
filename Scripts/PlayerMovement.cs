@@ -4,7 +4,9 @@ using System;
 public partial class PlayerMovement : CharacterBody2D
 {
     [Export]
-    public int moveSpeed {get; set;} = 400;
+    public Resource characterData;
+
+    int moveSpeed {get; set;}
 
     Vector2 inputDirection;
 
@@ -12,6 +14,10 @@ public partial class PlayerMovement : CharacterBody2D
     public override void _Ready()
     {
         GetTree().CallGroup("Aliens", "SetPlayer", this);
+        if(characterData is CharacterData stats)
+        {
+            moveSpeed = stats.MoveSpeed;
+        }
 
     }
 

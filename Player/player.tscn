@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/PlayerMovement.cs" id="1_2f3oi"]
 [ext_resource type="Texture2D" uid="uid://cwk8wrqtybja6" path="res://icon.svg" id="1_3mguj"]
-[ext_resource type="Script" path="res://Scripts/CharacterData.cs" id="3_338qo"]
+[ext_resource type="Resource" uid="uid://d0djhr30jh3us" path="res://Scripts/WaveSystem/PlayerStats.tres" id="2_jg336"]
 [ext_resource type="Script" path="res://Player/PlayerWeaponController.cs" id="4_3xtjs"]
 [ext_resource type="Script" path="res://Scripts/Buildings/Gun_Weapon.cs" id="5_rp2qw"]
 
@@ -14,6 +14,7 @@ size = Vector2(65, 59)
 [node name="PlayerBody" type="CharacterBody2D" parent="."]
 collision_mask = 15
 script = ExtResource("1_2f3oi")
+characterData = ExtResource("2_jg336")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBody"]
 shape = SubResource("RectangleShape2D_4fjwr")
@@ -24,9 +25,6 @@ texture = ExtResource("1_3mguj")
 
 [node name="PlayerCamera" type="Camera2D" parent="PlayerBody"]
 zoom = Vector2(0.8, 0.8)
-
-[node name="CharacterData" type="Node" parent="PlayerBody"]
-script = ExtResource("3_338qo")
 
 [node name="PlayerHead" type="Node2D" parent="PlayerBody"]
 script = ExtResource("4_3xtjs")
