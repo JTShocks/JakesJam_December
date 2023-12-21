@@ -53,6 +53,7 @@ public partial class Enemy_Base : CharacterBody2D, ITakeDamage
 
     public void Kill()
     {
+        
         QueueFree();
     }
 
@@ -61,9 +62,15 @@ public partial class Enemy_Base : CharacterBody2D, ITakeDamage
       healthSystem.TakeDamage(damage);   
       if(healthSystem._currentHealth <= 0)
       {
+
         Kill();
       }
 
+    }
+
+    public void DropMoney()
+    {
+        GD.Load<PackedScene>("res://Collectables/money.tscn").Instantiate();
     }
 
 }
