@@ -78,6 +78,7 @@ public partial class Turret_Base : Node2D, IBuilding
 			return;
 		}
 		listOfTargets.Add(target);
+		ReorderTargets();
 		GD.Print("Target is added");
 		
 
