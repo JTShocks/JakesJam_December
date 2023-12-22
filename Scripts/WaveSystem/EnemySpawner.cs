@@ -11,19 +11,16 @@ public partial class EnemySpawner : Node
 	Area2D spawnArea; // Area to spawn the enemies within
 
 
-	//Best way is some kind of queue system?
-	//Whenever the count for enemies in the group is under the given amount (determined by the wave)
-	//a valid spawner will try to spawn an enemy
-	//These cannot happen all at once and it should check the count
-
-	//Spawners can listen for a signal to when the enemies in the group die to then try replacing them
-
-	//The spawner should ONLY listen for the signal to spawn an enemy @ a given position
-
+	public override void _Ready()
+	{
+		//Add to a group of spawners
+	}
 
 	public void SpawnEnemy(Vector2 spawnLocation)
 	{
-		//Spawn an enemy at the given location
+		var enemy = GD.Load<PackedScene>("res://Enemy/enemy.tscn").Instantiate() as Node2D;
+		AddChild(enemy);
+		enemy.GlobalPosition = spawnLocation;
 	}
 
 }

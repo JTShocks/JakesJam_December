@@ -6,7 +6,13 @@ public partial class PlayerMovement : CharacterBody2D
     [Export]
     public Resource characterData;
 
+    [Signal]
+    public delegate void EnemyKilledEventHandler(int value);
+
     int moveSpeed {get; set;}
+
+    [Export]
+    public int playerMoney;
 
     Vector2 inputDirection;
 
@@ -14,10 +20,12 @@ public partial class PlayerMovement : CharacterBody2D
     public override void _Ready()
     {
         GetTree().CallGroup("Aliens", "SetPlayer", this);
+
         if(characterData is CharacterData stats)
         {
             moveSpeed = stats.MoveSpeed;
         }
+        EnemyKilled += GetMoney;
 
     }
 
@@ -32,5 +40,10 @@ public partial class PlayerMovement : CharacterBody2D
         inputDirection = Input.GetVector("Left", "Right", "Up", "Down");
         //this.Velocity = inputDirection * moveSpeed;
 
+    }
+
+    public void GetMoney(int value)
+    {
+        playerMoney += value;
     }
 }

@@ -11,14 +11,19 @@ public partial class BuildSpot : Node2D
 
 	bool spaceOccupied;
 
-	public IBuilding placedBuilding;
-	//Buildings need
-	// RepairBuilding(), UpgradeBuilding()
+	public Turret_Base placedBuilding;
 
-	//Subscribes to the events present within the placed building
+    //Subscribes to the events present within the placed building
 
-	public void OnInteract() // Method from the IInteractable
+    public override void _Ready()
+    {
+        base._Ready();
+		OnInteract();
+    }
+
+    public void OnInteract() // Method from the IInteractable
 	{
+		GD.Print("Build spot activated");
 		if(!spaceOccupied)
 		{
 			PlaceBuilding();
@@ -29,9 +34,18 @@ public partial class BuildSpot : Node2D
 
 	public void PlaceBuilding()
 	{
-		var building = GD.Load<PackedScene>("").Instantiate(); // Loads in the turret
-		AddChild(building);
+		placedBuilding = GD.Load<PackedScene>("res://Buildings/turret.tscn").Instantiate() as Turret_Base; // Loads in the turret
+		AddChild(placedBuilding);
+		Callable buildingDestroyed = new Callable(this, MethodName.OnBuildingDestroyed);
+		placedBuilding.Connect("OnTurretDestroyed", buildingDestroyed);
+
 		// Space holds a reference to the node
 		spaceOccupied = true;
+	}
+
+	public void OnBuildingDestroyed()
+	{
+		placedBuilding.QueueFree();
+		spaceOccupied = false;
 	}
 }

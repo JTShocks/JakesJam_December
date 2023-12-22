@@ -53,7 +53,7 @@ public partial class Enemy_Base : CharacterBody2D, ITakeDamage
 
     public void Kill()
     {
-        
+        player.EmitSignal("EnemyKilled", 25);
         QueueFree();
     }
 

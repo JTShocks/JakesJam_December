@@ -27,7 +27,7 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_3mguj")
 
 [node name="PlayerCamera" type="Camera2D" parent="PlayerBody"]
-zoom = Vector2(0.8, 0.8)
+zoom = Vector2(1.4, 1.4)
 
 [node name="PlayerHead" type="Node2D" parent="PlayerBody"]
 script = ExtResource("4_3xtjs")
