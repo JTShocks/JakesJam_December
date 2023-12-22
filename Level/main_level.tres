@@ -1,6 +1,7 @@
-[gd_resource type="TileSet" load_steps=4 format=3 uid="uid://cs5ndrc62y3b0"]
+[gd_resource type="TileSet" load_steps=6 format=3 uid="uid://cs5ndrc62y3b0"]
 
 [ext_resource type="Texture2D" uid="uid://d4ml42cwrt3mq" path="res://testPAllet.png" id="1_fdvcf"]
+[ext_resource type="Texture2D" uid="uid://cvyv52612w78u" path="res://Sprites/Jame_tiles.png" id="2_0cyar"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_prqlq"]
 
@@ -18,9 +19,40 @@ texture_region_size = Vector2i(32, 32)
 2:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:0/0/physics_layer_0/angular_velocity = 0.0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jy0s0"]
+texture = ExtResource("2_0cyar")
+texture_region_size = Vector2i(64, 64)
+0:0/next_alternative_id = 4
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+0:0/1 = 1
+0:0/1/flip_h = true
+0:0/1/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/1/physics_layer_0/angular_velocity = 0.0
+0:0/2 = 2
+0:0/2/flip_v = true
+0:0/2/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/2/physics_layer_0/angular_velocity = 0.0
+0:0/3 = 3
+0:0/3/flip_h = true
+0:0/3/flip_v = true
+0:0/3/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/3/physics_layer_0/angular_velocity = 0.0
+1:0/0 = 0
+1:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:0/0/physics_layer_0/angular_velocity = 0.0
+0:1/0 = 0
+0:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:1/0/physics_layer_0/angular_velocity = 0.0
+1:1/0 = 0
+1:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:1/0/physics_layer_0/angular_velocity = 0.0
+
 [resource]
-tile_size = Vector2i(32, 32)
-physics_layer_0/collision_layer = 4
-physics_layer_0/collision_mask = 3
+tile_size = Vector2i(64, 64)
+physics_layer_0/collision_layer = 8
+physics_layer_0/collision_mask = 19
 physics_layer_0/physics_material = SubResource("PhysicsMaterial_prqlq")
 sources/0 = SubResource("TileSetAtlasSource_06g6a")
+sources/1 = SubResource("TileSetAtlasSource_jy0s0")

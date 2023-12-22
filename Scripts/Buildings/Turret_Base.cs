@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public partial class Turret_Base : Node2D, IBuilding, ITakeDamage
 {
-
+	[Signal]
 	public delegate void OnTurretDestroyedEventHandler();
 
 	int baseDamage = 5;
@@ -28,8 +28,9 @@ public partial class Turret_Base : Node2D, IBuilding, ITakeDamage
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		baseStats = new BuildingStats(5, 100);
+		baseStats = new BuildingStats(10, 100);
 		currentHealth = baseStats.BaseHealth;
+		baseDamage = baseStats.BaseDamage;
 		turretHead = GetNode<Node2D>("TurretHead");
 		turretWeapon = GetNode<Node2D>("TurretHead") as IDoDamage;
 		AddChild(turretShootTimer);
@@ -147,6 +148,7 @@ public partial class Turret_Base : Node2D, IBuilding, ITakeDamage
 	public void Kill()
 	{
 			GD.Print("Turret has been destroyed");
+			EmitSignal(SignalName.OnTurretDestroyed);
 	}
 
 }
