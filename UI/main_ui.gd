@@ -7,11 +7,11 @@ var player_stats := preload("res://Scripts/WaveSystem/PlayerStats.tres")
 @onready var cash := $PanelContainer/VBoxContainer/Cash
 
 @export var game_controller : Node
-@export var player : Node2D
+@export var player : CharacterBody2D
 
 @onready var wave_system  = game_controller.get_node("Wave System")
 #@onready var spawner_system  = game_controller.get_node("Spawner System")
-@onready var player_info_node := player.get_node("PlayerBody")
+@onready var player_info_node = player
 var wave_timer : Timer
 var wave_number : int
 
