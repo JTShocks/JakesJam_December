@@ -50,4 +50,5 @@ position = Vector2(864, 33)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Main UI" parent="CanvasLayer" instance=ExtResource("7_fh68l")]
+[node name="Main UI" parent="CanvasLayer" node_paths=PackedStringArray("game_controller") instance=ExtResource("7_fh68l")]
+game_controller = NodePath("../../Game Controller")

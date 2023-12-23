@@ -14,7 +14,7 @@ script = ExtResource("1_8k05x")
 layout_mode = 2
 offset_left = 25.0
 offset_top = 15.0
-offset_right = 496.0
+offset_right = 573.0
 offset_bottom = 244.0
 theme = ExtResource("2_aoa1m")
 
