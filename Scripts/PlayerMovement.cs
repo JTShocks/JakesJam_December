@@ -19,7 +19,9 @@ public partial class PlayerMovement : CharacterBody2D
 
     public override void _Ready()
     {
+        AddToGroup("Player");
         GetTree().CallGroup("Aliens", "SetPlayer", this);
+        
 
         if(characterData is CharacterData stats)
         {
@@ -45,5 +47,13 @@ public partial class PlayerMovement : CharacterBody2D
     public void GetMoney(int value)
     {
         playerMoney += value;
+    }
+    public void LoseMoney(int value)
+    {
+        playerMoney -= value;
+        if(playerMoney < 0)
+        {
+            playerMoney = 0;
+        }
     }
 }
