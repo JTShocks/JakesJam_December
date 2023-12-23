@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class Turret_Base : Node2D, IBuilding, ITakeDamage
+public partial class Turret_Base : CharacterBody2D, IBuilding, ITakeDamage
 {
 	[Signal]
 	public delegate void OnTurretDestroyedEventHandler();
@@ -22,15 +22,22 @@ public partial class Turret_Base : Node2D, IBuilding, ITakeDamage
 
 	int currentHealth {get; set;}
 
+	int totalBuildingValue;
+	int upgradePrice {get; set;}
+	int buildingLevel = 1;
+	int repairPrice {get; set;}
+
 
 	Node2D turretHead;
 	public IDoDamage turretWeapon;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		baseStats = new BuildingStats(10, 100);
+		baseStats = new BuildingStats(10, 100, 100);
 		currentHealth = baseStats.BaseHealth;
 		baseDamage = baseStats.BaseDamage;
+		totalBuildingValue = baseStats.BasePrice;
+		upgradePrice = (int)(baseStats.BasePrice*1.5f);
 		turretHead = GetNode<Node2D>("TurretHead");
 		turretWeapon = GetNode<Node2D>("TurretHead") as IDoDamage;
 		AddChild(turretShootTimer);
@@ -64,7 +71,7 @@ public partial class Turret_Base : Node2D, IBuilding, ITakeDamage
 	public void TryDoAttack()
 	{
 		GD.Print("Turret has fired");
-			turretWeapon?.DoDamage(baseDamage);
+			turretWeapon?.DoDamage(baseStats.BaseDamage);
 
 	}
 
@@ -87,16 +94,15 @@ public partial class Turret_Base : Node2D, IBuilding, ITakeDamage
 		if(listOfTargets.Contains(target))
 		{
 			listOfTargets.Remove(target);
+			ReorderTargets();
 			GD.Print("Target removed");
 		}
 
-		if(listOfTargets.Count != 0)
+		if(listOfTargets.Count == 0)
 		{
-			ReorderTargets();
-		}
-		if(hasTargets == false)
-		{
+			hasTargets = false;
 			turretShootTimer.Stop();
+
 		}
 
 
@@ -128,17 +134,21 @@ public partial class Turret_Base : Node2D, IBuilding, ITakeDamage
 
     public void UpgradeBuilding()
     {
-        throw new NotImplementedException();
+		buildingLevel++;
+		GD.Print("Building is upgraded");
+		UpdateBuildingStats();
     }
 
     public void RepairBuilding()
     {
-        throw new NotImplementedException();
+		GD.Print("Building repaired");
+        currentHealth = baseStats.BaseHealth;
     }
 
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+		repairPrice = baseStats.BaseHealth - (baseStats.BaseHealth* (currentHealth/baseStats.BaseHealth));
 		if(currentHealth <= 0)
 		{
 			Kill();
@@ -151,4 +161,45 @@ public partial class Turret_Base : Node2D, IBuilding, ITakeDamage
 			EmitSignal(SignalName.OnTurretDestroyed);
 	}
 
+    public void TryUpgrade(int currentMoney)
+    {
+        if(currentMoney < upgradePrice)
+		{
+			GD.Print("Not enough money. Price to upgrade =" + upgradePrice);
+			return;
+		}
+		if(currentHealth < baseStats.BaseHealth)
+		{
+			GD.Print("Building is damaged");
+			return;
+		}
+		GetTree().CallGroup("Player", "LoseMoney", upgradePrice);
+		UpgradeBuilding();
+    }
+
+    public void TryRepair(int currentMoney)
+    {
+        if(currentMoney < repairPrice)
+		{
+			GD.Print("Not enough money: Price to repair = " + repairPrice);
+			return;
+		}
+		if(currentHealth == baseStats.BaseHealth)
+		{
+			GD.Print("Building is full health");
+			return;
+		}
+		GetTree().CallGroup("Player", "LoseMoney", repairPrice);
+		RepairBuilding();
+    }
+
+	public void UpdateBuildingStats()
+	{
+		float newDamage = baseDamage*1.5f;
+        BuildingStats newStats = new BuildingStats(((int)newDamage), (int)((float)baseStats.BaseHealth*1.5), totalBuildingValue + upgradePrice);
+		baseStats = newStats;
+		totalBuildingValue = baseStats.BasePrice;
+		upgradePrice = (int)(totalBuildingValue*1.5f);
+		currentHealth = baseStats.BaseHealth;
+	}
 }

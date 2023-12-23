@@ -37,6 +37,7 @@ public partial class WaveSystem : Node
 		GD.Print("New wave started");
 		currentWaveCount++;
 		EmitSignal(SignalName.OnNewWaveStart, currentWaveCount);
+		waveIntervalTimer.Stop();
 	}
 
 	//What does the Wave System need?

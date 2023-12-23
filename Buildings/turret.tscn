@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://blt56opdf6dc5"]
+[gd_scene load_steps=9 format=3 uid="uid://blt56opdf6dc5"]
 
 [ext_resource type="Script" path="res://Scripts/Buildings/Detector.cs" id="1_75ku0"]
 [ext_resource type="Script" path="res://Scripts/Buildings/Turret_Base.cs" id="1_u4pq7"]
@@ -9,7 +9,12 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vntr6"]
 
-[node name="Turret" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_skrg3"]
+size = Vector2(53, 53.5)
+
+[node name="Turret" type="CharacterBody2D" groups=["PlayerBuilding"]]
+collision_layer = 80
+collision_mask = 3
 script = ExtResource("1_u4pq7")
 baseStats = ExtResource("2_ybd7h")
 
@@ -38,6 +43,9 @@ shape = SubResource("CircleShape2D_vntr6")
 
 [node name="Turret_Base" type="Sprite2D" parent="."]
 texture = ExtResource("5_h4j7e")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_skrg3")
 
 [connection signal="EnemyEnterRange" from="Detector" to="." method="OnTargetEnterRange"]
 [connection signal="EnemyLeaveRange" from="Detector" to="." method="OnTargetLeaveRange"]
