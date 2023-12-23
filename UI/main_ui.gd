@@ -10,17 +10,17 @@ var player_stats := preload("res://Scripts/WaveSystem/PlayerStats.tres")
 @export var player : Node2D
 
 @onready var wave_system  = game_controller.get_node("Wave System")
-@onready var spawner_system  = game_controller.get_node("Spawner System")
+#@onready var spawner_system  = game_controller.get_node("Spawner System")
 @onready var player_info_node := player.get_node("PlayerBody")
 var wave_timer : Timer
-var wave_number := 1
+var wave_number : int
 
 # TODO: Ask where the Cash info is kept.
 # TODO Ask where wave number is kept.
 
 func _process(delta):
 	wave_timer = wave_system.waveIntervalTimer
-	#wave_number = current wave???? #spawner_system.enemiesToSpawn
+	wave_number = wave_system.currentWaveCount #spawner_system.enemiesToSpawn
 	
 	health.text = "Player Health: " + str(player_stats.MaxHealth)
 	wave_display.text = "Wave: " + str(wave_number)
