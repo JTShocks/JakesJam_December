@@ -1,0 +1,50 @@
+[gd_scene load_steps=3 format=3 uid="uid://cnias40cmsen6"]
+
+[ext_resource type="Script" path="res://UI/main_ui.gd" id="1_8k05x"]
+[ext_resource type="Theme" uid="uid://cdg85y1vv3p1j" path="res://UI/ui_theme_1.tres" id="2_aoa1m"]
+
+[node name="Main UI" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_8k05x")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 2
+offset_left = 25.0
+offset_top = 15.0
+offset_right = 496.0
+offset_bottom = 244.0
+theme = ExtResource("2_aoa1m")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="Health" type="RichTextLabel" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_aoa1m")
+theme_override_font_sizes/normal_font_size = 36
+text = "Player Health: "
+fit_content = true
+
+[node name="Wave Number" type="RichTextLabel" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_aoa1m")
+theme_override_font_sizes/normal_font_size = 36
+text = "Wave Number: "
+fit_content = true
+
+[node name="Wave Interval Timer" type="RichTextLabel" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_aoa1m")
+theme_override_font_sizes/normal_font_size = 36
+text = "Wave Timer: "
+fit_content = true
+
+[node name="Cash" type="RichTextLabel" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_aoa1m")
+theme_override_font_sizes/normal_font_size = 36
+text = "Total Cash: "
+fit_content = true

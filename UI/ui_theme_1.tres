@@ -1,0 +1,23 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://cdg85y1vv3p1j"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qnpa2"]
+bg_color = Color(0.0784314, 0.360784, 0.411765, 1)
+border_width_left = 20
+border_width_top = 20
+border_width_right = 20
+border_width_bottom = 20
+border_color = Color(0.568627, 0.486275, 0.996078, 1)
+corner_radius_top_left = 35
+corner_radius_bottom_right = 170
+corner_detail = 20
+expand_margin_left = 10.0
+shadow_color = Color(0, 1, 0, 0.0392157)
+shadow_size = 10
+shadow_offset = Vector2(1.355, 9.925)
+
+[sub_resource type="SystemFont" id="SystemFont_bqwj4"]
+font_names = PackedStringArray("Cambria")
+
+[resource]
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_qnpa2")
+RichTextLabel/fonts/normal_font = SubResource("SystemFont_bqwj4")

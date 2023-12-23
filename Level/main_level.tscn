@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://xt37akotcxly"]
+[gd_scene load_steps=8 format=3 uid="uid://xt37akotcxly"]
 
 [ext_resource type="PackedScene" uid="uid://c7ml3peoafg3h" path="res://Player/player.tscn" id="1_qu4hu"]
 [ext_resource type="TileSet" uid="uid://cs5ndrc62y3b0" path="res://Level/main_level.tres" id="2_0ifrj"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bxrfqarbk6l2k" path="res://Enemy/enemy.tscn" id="5_l6udl"]
 [ext_resource type="PackedScene" uid="uid://cgpoi26mckj7x" path="res://game_controller.tscn" id="6_htwge"]
 [ext_resource type="PackedScene" uid="uid://vyjx3kcrbs4s" path="res://Buildings/build_spot.tscn" id="7_bw3sa"]
+[ext_resource type="PackedScene" uid="uid://cnias40cmsen6" path="res://UI/main_ui.tscn" id="7_fh68l"]
 
 [node name="main_Level" type="Node2D"]
 
@@ -46,3 +47,7 @@ position = Vector2(368, 21)
 
 [node name="BuildSpot" parent="." instance=ExtResource("7_bw3sa")]
 position = Vector2(864, 33)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Main UI" parent="CanvasLayer" instance=ExtResource("7_fh68l")]
