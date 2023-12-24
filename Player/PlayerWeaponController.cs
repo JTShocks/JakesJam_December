@@ -8,6 +8,7 @@ public partial class PlayerWeaponController : Node2D
 	RayCast2D playerCast;
 
 	public IDoDamage equippedWeapon;
+	public int weaponDamage = 0;
 
 	public override void _Ready()
 	{
@@ -28,21 +29,11 @@ public partial class PlayerWeaponController : Node2D
 
 	public void TryToShoot()
 	{
-		equippedWeapon?.DoDamage(0);
+		equippedWeapon?.DoDamage(weaponDamage);
 	}
 
-	public void Shoot()
+	public void _on_player_update_weapon(int newDamage)
 	{
-		GD.Print("Player has shot");
-		var coll = playerCast.GetCollider();
-		if(coll is ITakeDamage target)
-		{
-			target.TakeDamage(1);
-		}
-		else
-		{
-			GD.Print("Didn't hit anything");
-		}
-
+		weaponDamage = newDamage;
 	}
 }

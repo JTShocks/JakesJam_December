@@ -6,18 +6,20 @@ public partial class CharacterData : Resource
 	[Export]
 	public Faction _characterFaction;
 	[Export]
-	public int MaxHealth {get; set;}
+	public float MaxHealth {get; set;}
     [Export]
     public int MoveSpeed {get; set;}
+    [Export]
+    public float BaseDamage {get; set;}
 
 
     public CharacterData() : this(0, 400, 0){}
 
-    public CharacterData(int health, int moveSpeed, Faction faction)
+    public CharacterData(float health, int moveSpeed, float baseDamage)
     {
         MaxHealth = health;
         MoveSpeed = moveSpeed;
-        _characterFaction = faction;
+        BaseDamage = baseDamage;
     }
 
 

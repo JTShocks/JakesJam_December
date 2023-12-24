@@ -1,14 +1,14 @@
 [gd_scene load_steps=9 format=3 uid="uid://c7ml3peoafg3h"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerMovement.cs" id="1_2f3oi"]
-[ext_resource type="Texture2D" uid="uid://cwk8wrqtybja6" path="res://icon.svg" id="1_3mguj"]
 [ext_resource type="Resource" uid="uid://d0djhr30jh3us" path="res://Scripts/WaveSystem/PlayerStats.tres" id="2_jg336"]
 [ext_resource type="Script" path="res://Player/PlayerWeaponController.cs" id="4_3xtjs"]
+[ext_resource type="Texture2D" uid="uid://b47uw4chtryab" path="res://Sprites/Player_JakeJam.png" id="4_nny7l"]
 [ext_resource type="Script" path="res://Scripts/Buildings/Gun_Weapon.cs" id="5_rp2qw"]
 [ext_resource type="Script" path="res://Player/Interactor.cs" id="6_oetcy"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_4fjwr"]
-size = Vector2(65, 59)
+[sub_resource type="CircleShape2D" id="CircleShape2D_gdjbo"]
+radius = 26.1725
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ngxui"]
 
@@ -18,11 +18,7 @@ script = ExtResource("1_2f3oi")
 characterData = ExtResource("2_jg336")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_4fjwr")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("1_3mguj")
+shape = SubResource("CircleShape2D_gdjbo")
 
 [node name="PlayerCamera" type="Camera2D" parent="."]
 zoom = Vector2(1.4, 1.4)
@@ -31,8 +27,9 @@ zoom = Vector2(1.4, 1.4)
 script = ExtResource("4_3xtjs")
 
 [node name="Sprite2D" type="Sprite2D" parent="PlayerHead"]
-scale = Vector2(0.3, 0.3)
-texture = ExtResource("1_3mguj")
+rotation = -1.5708
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("4_nny7l")
 
 [node name="GunWeapon" type="Node2D" parent="PlayerHead"]
 script = ExtResource("5_rp2qw")
@@ -45,11 +42,12 @@ collision_mask = 6
 script = ExtResource("6_oetcy")
 
 [node name="InteractorArea" type="Area2D" parent="Interactor"]
-scale = Vector2(10, 10)
+scale = Vector2(5, 5)
 collision_layer = 0
 collision_mask = 48
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interactor/InteractorArea"]
 shape = SubResource("CircleShape2D_ngxui")
 
+[connection signal="UpdateWeapon" from="." to="PlayerHead" method="_on_player_update_weapon"]
 [connection signal="body_entered" from="Interactor/InteractorArea" to="Interactor" method="OnEnterArea"]

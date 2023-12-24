@@ -7,3 +7,4 @@ script = ExtResource("1_ycjyl")
 _characterFaction = 0
 MaxHealth = 100
 MoveSpeed = 400
+BaseDamage = 10

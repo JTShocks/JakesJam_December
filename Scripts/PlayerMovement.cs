@@ -1,15 +1,25 @@
 using Godot;
 using System;
 
-public partial class PlayerMovement : CharacterBody2D
+public partial class PlayerMovement : CharacterBody2D, ITakeDamage
 {
     [Export]
-    public Resource characterData;
+    public CharacterData characterData;
 
     [Signal]
     public delegate void EnemyKilledEventHandler(int value);
 
+    [Signal]
+    public delegate void UpdateWeaponEventHandler(int newDamage);
+
+
+
     int moveSpeed {get; set;}
+    float maxHealth {get; set;}
+    int currentHealth;
+    float baseDamage {get; set;}
+    public int playerLevel = 1;
+    int levelCap = 6;
 
     [Export]
     public int playerMoney;
@@ -20,13 +30,9 @@ public partial class PlayerMovement : CharacterBody2D
     public override void _Ready()
     {
         AddToGroup("Player");
-        GetTree().CallGroup("Aliens", "SetPlayer", this);
-        
+        SetStats(characterData);
 
-        if(characterData is CharacterData stats)
-        {
-            moveSpeed = stats.MoveSpeed;
-        }
+
         EnemyKilled += GetMoney;
 
     }
@@ -56,4 +62,44 @@ public partial class PlayerMovement : CharacterBody2D
             playerMoney = 0;
         }
     }
+
+    public void LevelUp()
+    {
+        if(playerLevel != levelCap)
+        {
+            
+            playerLevel++;
+            GD.Print("Player leveled up to: " + playerLevel);
+            float newHealth = (float)playerLevel/10 * 100;
+            float newDamage =  10 * (1/(float)playerLevel);
+            if(playerLevel == 6)
+            {
+                newDamage = 3;
+            }
+            characterData.MaxHealth += newHealth;
+            characterData.MoveSpeed += 40;
+            characterData.BaseDamage += (int)newDamage;
+            SetStats(characterData);
+
+        }
+
+    }
+    public void SetStats(CharacterData stats)
+    {
+        moveSpeed = stats.MoveSpeed;
+        maxHealth = stats.MaxHealth;
+        baseDamage = stats.BaseDamage;
+            GD.Print("Max Health: " + maxHealth);
+            GD.Print("Movespeed: " + moveSpeed);
+            GD.Print("Base Damage: " + baseDamage);
+            EmitSignal(SignalName.UpdateWeapon, baseDamage);
+            
+
+    }
+
+    public void TakeDamage(int damage)
+    {
+        throw new NotImplementedException();
+    }
+
 }
