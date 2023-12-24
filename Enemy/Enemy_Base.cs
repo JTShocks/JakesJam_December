@@ -5,7 +5,7 @@ public partial class Enemy_Base : CharacterBody2D, ITakeDamage
 {
     int moveSpeed {get; set;}
 
-    CharacterBody2D player;
+    CharacterBody2D target;
     HealthSystem healthSystem;
 
     [Export]
@@ -15,7 +15,7 @@ public partial class Enemy_Base : CharacterBody2D, ITakeDamage
     //If they get in range of a turret/building, they move toward that building
     //If they are not in range of a building, they move towards the most recent source of damage
 
-    //Example: If the player shoots them outside the range of the turrets, they move towards the player
+    //Example: If the target shoots them outside the range of the turrets, they move towards the target
     //If they are already under attack from a turret, they should prioritize based on distance between the most recent sources of damage
     //
 
@@ -33,27 +33,27 @@ public partial class Enemy_Base : CharacterBody2D, ITakeDamage
 
     public override void _PhysicsProcess(double delta)
     {
-        if(player == null)
+        if(target == null)
         {
             return;
         }
-        Vector2 playerDirection = player.GlobalPosition - GlobalPosition;
-        GlobalRotation = Mathf.Atan2(playerDirection.Y, playerDirection.X);
-        MoveAndCollide(playerDirection.Normalized() * moveSpeed * (float)delta);
+        Vector2 targetDirection = target.GlobalPosition - GlobalPosition;
+        GlobalRotation = Mathf.Atan2(targetDirection.Y, targetDirection.X);
+        MoveAndCollide(targetDirection.Normalized() * moveSpeed * (float)delta);
 
 
 
         base._PhysicsProcess(delta);
     }
 
-    public void SetPlayer(CharacterBody2D p)
+    public void SetTarget(CharacterBody2D t)
     {
-        player = p;
+        target = t;
     }
 
     public void Kill()
     {
-        player.EmitSignal("EnemyKilled", 25);
+        GetTree().CallGroup("Player", "GetMoney", 25);
         QueueFree();
     }
 

@@ -37,7 +37,7 @@ public partial class Turret_Base : CharacterBody2D, IBuilding, ITakeDamage
 		currentHealth = baseStats.BaseHealth;
 		baseDamage = baseStats.BaseDamage;
 		totalBuildingValue = baseStats.BasePrice;
-		upgradePrice = (int)(baseStats.BasePrice*1.5f);
+		upgradePrice = (int)(100 * 1.5f);
 		turretHead = GetNode<Node2D>("TurretHead");
 		turretWeapon = GetNode<Node2D>("TurretHead") as IDoDamage;
 		AddChild(turretShootTimer);
@@ -173,6 +173,10 @@ public partial class Turret_Base : CharacterBody2D, IBuilding, ITakeDamage
 			GD.Print("Building is damaged");
 			return;
 		}
+		if(buildingLevel >= 3)
+		{
+			return;
+		}
 		GetTree().CallGroup("Player", "LoseMoney", upgradePrice);
 		UpgradeBuilding();
     }
@@ -195,11 +199,22 @@ public partial class Turret_Base : CharacterBody2D, IBuilding, ITakeDamage
 
 	public void UpdateBuildingStats()
 	{
-		float newDamage = baseDamage*1.5f;
-        BuildingStats newStats = new BuildingStats(((int)newDamage), (int)((float)baseStats.BaseHealth*1.5), totalBuildingValue + upgradePrice);
-		baseStats = newStats;
-		totalBuildingValue = baseStats.BasePrice;
-		upgradePrice = (int)(totalBuildingValue*1.5f);
+		switch(buildingLevel)
+		{
+			case 2:
+			baseStats.BaseDamage += 5;
+			baseStats.TotalBuildingValue = totalBuildingValue + upgradePrice;
+			baseStats.BaseHealth += 100;
+			upgradePrice = 275;
+			
+			break;
+			case 3:
+			shootIntervalInSeconds *= .5f; //Speed up shooting by 100%
+			baseStats.TotalBuildingValue = totalBuildingValue + upgradePrice;
+			baseStats.BaseHealth += 100;	
+
+			break;
+		}
 		currentHealth = baseStats.BaseHealth;
 	}
 }
