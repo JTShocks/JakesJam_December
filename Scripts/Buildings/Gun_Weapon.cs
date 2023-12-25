@@ -24,6 +24,10 @@ public partial class Gun_Weapon : Node2D, IDoDamage
 		if(coll is ITakeDamage target)
 		{
 			target?.TakeDamage(damage);
+            if(coll is Enemy_Base enemy)
+            {
+                enemy.SetTarget(GetParent().GetParent() as CharacterBody2D);
+            }
 		}
 		else
 		{
