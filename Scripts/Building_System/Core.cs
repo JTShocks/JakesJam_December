@@ -44,5 +44,4 @@ public partial class Core : CharacterBody2D, ITakeDamage, IInteractable
 	{
 		GetTree().CallGroup("Aliens", "SetTarget", this);
 	}
-
 }

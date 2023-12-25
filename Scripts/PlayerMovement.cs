@@ -102,4 +102,8 @@ public partial class PlayerMovement : CharacterBody2D, ITakeDamage
         throw new NotImplementedException();
     }
 
+    public void TakeDamage(int damage, GodotObject source)
+    {
+        throw new NotImplementedException();
+    }
 }
