@@ -4,9 +4,9 @@ using System;
 public partial class Enemy_Base : CharacterBody2D, ITakeDamage
 {
     int moveSpeed {get; set;}
+    float currentHealth {get; set;}
 
     CharacterBody2D target;
-    HealthSystem healthSystem;
 
     [Export]
     public Resource characterStats;
@@ -25,8 +25,8 @@ public partial class Enemy_Base : CharacterBody2D, ITakeDamage
         if(characterStats is CharacterData stats)
         {
             moveSpeed = stats.MoveSpeed;
+            currentHealth = stats.MaxHealth;
         }
-        healthSystem = GetNode<HealthSystem>("HealthSystem");
         base._Ready();
         
     }
@@ -59,18 +59,12 @@ public partial class Enemy_Base : CharacterBody2D, ITakeDamage
 
     public void TakeDamage(int damage)
     {
-      healthSystem.TakeDamage(damage);   
-      if(healthSystem._currentHealth <= 0)
+      currentHealth -= damage;
+      if(currentHealth <= 0)
       {
 
         Kill();
       }
 
     }
-
-    public void DropMoney()
-    {
-        GD.Load<PackedScene>("res://Collectables/money.tscn").Instantiate();
-    }
-
 }

@@ -12,7 +12,7 @@ size = Vector2(86, 54)
 
 [node name="Core" type="Node2D"]
 
-[node name="Core_Main" type="CharacterBody2D" parent="."]
+[node name="Core_Main" type="CharacterBody2D" parent="." groups=["Core"]]
 collision_layer = 80
 collision_mask = 67
 script = ExtResource("1_yyw11")
