@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bv34ld7kabnjk"]
+
+[ext_resource type="Script" path="res://Scripts/WaveSystem/WaveSystem.cs" id="1_fhsnp"]
+[ext_resource type="Script" path="res://Scripts/WaveSystem/SpawnerSystem.cs" id="2_rqcbq"]
+
+[node name="WaveSystem" type="Node"]
+script = ExtResource("1_fhsnp")
+
+[node name="SpawnerSystem" type="Node" parent="."]
+script = ExtResource("2_rqcbq")
+
+[connection signal="OnNewWaveStart" from="." to="SpawnerSystem" method="ActivateSpawners"]
+[connection signal="OnWaveEnded" from="." to="SpawnerSystem" method="DeactivateSpawners"]

@@ -31,7 +31,7 @@ public partial class Core : CharacterBody2D, ITakeDamage, IInteractable
 
     public void Interact()
     {
-        EmitSignal(SignalName.OnCoreInteract);
+		EmitSignal(SignalName.OnCoreInteract);
 		GD.Print("Core interacted");
     }
 

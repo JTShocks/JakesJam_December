@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://blf46a84s75n5"]
+
+[ext_resource type="Script" path="res://Scripts/WaveSystem/EnemySpawner.cs" id="1_y8dn5"]
+[ext_resource type="Texture2D" uid="uid://cmh7coxemvpti" path="res://Sprites/EnemySpawner.png" id="2_un1g4"]
+
+[node name="EnemySpawner" type="Node2D" groups=["Spawners"]]
+script = ExtResource("1_y8dn5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_un1g4")

@@ -2,17 +2,17 @@
 
 [ext_resource type="PackedScene" uid="uid://c7ml3peoafg3h" path="res://Player/player.tscn" id="1_qu4hu"]
 [ext_resource type="TileSet" uid="uid://cs5ndrc62y3b0" path="res://Level/main_level.tres" id="2_0ifrj"]
-[ext_resource type="PackedScene" uid="uid://bxrfqarbk6l2k" path="res://Enemy/enemy.tscn" id="5_l6udl"]
-[ext_resource type="PackedScene" uid="uid://cgpoi26mckj7x" path="res://game_controller.tscn" id="6_htwge"]
 [ext_resource type="PackedScene" uid="uid://vyjx3kcrbs4s" path="res://Buildings/build_spot.tscn" id="7_bw3sa"]
 [ext_resource type="PackedScene" uid="uid://cnias40cmsen6" path="res://UI/main_ui.tscn" id="7_fh68l"]
+[ext_resource type="PackedScene" uid="uid://bv34ld7kabnjk" path="res://Scripts/WaveSystem/wave_system.tscn" id="7_fypao"]
+[ext_resource type="PackedScene" uid="uid://blf46a84s75n5" path="res://Enemy/enemy_spawner.tscn" id="8_fncfu"]
 [ext_resource type="PackedScene" uid="uid://db74hw4mtug3l" path="res://Buildings/core.tscn" id="8_sg1t4"]
 
 [node name="main_Level" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource("1_qu4hu")]
 z_index = 1
-position = Vector2(742, -433)
+position = Vector2(707, -153)
 playerMoney = 150
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -35,17 +35,6 @@ layer_2/y_sort_enabled = false
 layer_2/y_sort_origin = 0
 layer_2/z_index = 0
 layer_2/tile_data = PackedInt32Array(-458744, 65537, 0, -393208, 65537, 0, -327672, 65537, 0, -262136, 65537, 0, -458743, 65537, 0, -393207, 65537, 0, -327671, 65537, 0, -262135, 65537, 0, -458742, 65537, 0, -393206, 65537, 0, -327670, 65537, 0, -262134, 65537, 0, -458741, 65537, 0, -393205, 65537, 0, -327669, 65537, 0, -262133, 65537, 0, -458740, 65537, 0, -393204, 65537, 0, -327668, 65537, 0, -262132, 65537, 0, -196600, 1, 131072, -196599, 65537, 0, -196598, 65537, 0, -196597, 65537, 0, -196596, 65537, 0, 13, 65537, 1, -524279, 65537, 0, -524278, 65537, 0, -524277, 65537, 0, -524276, 65537, 0, -524280, 1, 0, -196595, 1, 196608, -262131, 65537, 0, -327667, 65537, 0, -393203, 65537, 0, -458739, 65537, 0, -524275, 1, 65536, 8, 65537, 1, -196592, 65537, 1, -524272, 65537, 1, -720883, 65537, 1, -720888, 65537, 1, -524283, 65537, 1, -196603, 65537, 1, -589820, 1, 0, -131068, 1, 131072, -131066, 1, 196608, -262138, 1, 65536, -262140, 1, 0, -262139, 65537, 0, -196604, 65537, 0, -196602, 65537, 0, -131067, 65537, 0, -655347, 65537, 0, -720884, 65537, 0, -786419, 65537, 0, -720882, 65537, 0, -655352, 65537, 0, -720889, 65537, 0, -720887, 65537, 0, -786424, 65537, 0, -524273, 65537, 0, -589808, 65537, 0, -524271, 65537, 0, -458736, 65537, 0, -196593, 65537, 0, -262128, 65537, 0, -196591, 65537, 0, -131056, 65537, 0, -65523, 65537, 0, 14, 65537, 0, 12, 65537, 0, 65549, 65537, 0, -65528, 65537, 0, 7, 65537, 0, 65544, 65537, 0, 9, 65537, 0, -65529, 1, 0, -65527, 1, 65536, -65522, 1, 65536, -262127, 1, 65536, -131057, 1, 131072, 65548, 1, 131072, 65543, 1, 131072, 65545, 1, 196608, 65550, 1, 196608, -131055, 1, 196608, -65524, 1, 0, -262129, 1, 0, -786420, 1, 0, -786425, 1, 0, -589809, 1, 0, -786418, 1, 65536, -786423, 1, 65536, -589818, 1, 65536, -589807, 1, 65536, -458735, 1, 196608, -458737, 1, 131072, -655348, 1, 131072, -655353, 1, 131072, -458748, 1, 131072, -458746, 1, 196608, -655346, 1, 196608, -458747, 65537, 0, -524284, 65537, 0, -589819, 65537, 0, -524282, 65537, 0, -655351, 1, 196608, 22, 2, 0, 23, 65538, 0, 65558, 2, 131072, 65559, 65538, 65536, 24, 65538, 0, 25, 65538, 0, 26, 65538, 0, 27, 65538, 0, 28, 2, 65536, 65560, 65538, 65536, 65561, 65538, 65536, 65562, 65538, 65536, 65563, 65538, 65536, 65564, 2, 196608)
-
-[node name="Enemy" parent="." instance=ExtResource("5_l6udl")]
-position = Vector2(95, -570)
-
-[node name="Enemy3" parent="." instance=ExtResource("5_l6udl")]
-position = Vector2(72, -341)
-
-[node name="Enemy2" parent="." instance=ExtResource("5_l6udl")]
-position = Vector2(116, -181)
-
-[node name="Game Controller" parent="." instance=ExtResource("6_htwge")]
 
 [node name="AllBuildSpots" type="Node2D" parent="."]
 
@@ -75,9 +64,26 @@ position = Vector2(548, 34)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Main UI" parent="CanvasLayer" node_paths=PackedStringArray("game_controller", "player") instance=ExtResource("7_fh68l")]
-game_controller = NodePath("../../Game Controller")
+[node name="Main UI" parent="CanvasLayer" node_paths=PackedStringArray("wave_system", "player") instance=ExtResource("7_fh68l")]
+wave_system = NodePath("../../WaveSystem")
 player = NodePath("../../Player")
 
 [node name="Core" parent="." instance=ExtResource("8_sg1t4")]
 position = Vector2(704, -319)
+
+[node name="EnemySpawner" parent="." instance=ExtResource("8_fncfu")]
+position = Vector2(-383, -385)
+
+[node name="EnemySpawner2" parent="." instance=ExtResource("8_fncfu")]
+position = Vector2(708, -1405)
+
+[node name="EnemySpawner3" parent="." instance=ExtResource("8_fncfu")]
+position = Vector2(710, 768)
+
+[node name="EnemySpawner4" parent="." instance=ExtResource("8_fncfu")]
+position = Vector2(1796, -320)
+
+[node name="WaveSystem" parent="." instance=ExtResource("7_fypao")]
+
+[connection signal="OnCoreInteract" from="Core" to="WaveSystem" method="TryToStartWave"]
+[connection signal="EndOfWaveReward" from="WaveSystem" to="Player" method="GetMoney"]

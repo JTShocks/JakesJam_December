@@ -8,12 +8,14 @@ public partial class WaveSystem : Node
 	[Signal]
 	public delegate void OnWaveEndedEventHandler();
 
+	[Signal]
+	public delegate void EndOfWaveRewardEventHandler(int reward);
+
 	//Player activates the waves from the Core
 	//The timer for the duration of the wave is based on the current wave
 	//The longer the game goes on, the longer the timer becomes
 	//easy method, check the MOD of the currentWave & increment the wave duration based on that
 	//1 minute until reaching the cap of 8 minutes
-
 
 
 	public Timer waveIntervalTimer = new(); // Timer between each wave
@@ -23,14 +25,16 @@ public partial class WaveSystem : Node
 	public override void _Ready()
 	{
 		AddChild(waveIntervalTimer);
-		waveIntervalTimer.Timeout += StartNewWave;
-		OnWaveEnded += StopTimer; // When recieving the signal that a wave has ended, start the new timer
+		waveIntervalTimer.Timeout += StopWave;
 		//For testing purposes
-		//StartWaveTimer();
+		//StartNewWave();
 	}
-	public void StopTimer()
+	public void StopWave()
 	{
 		GD.Print("Timer started");
+		EmitSignal(SignalName.OnWaveEnded);
+		int reward = 50 * currentWaveCount;
+		EmitSignal(SignalName.EndOfWaveReward, reward);
 		waveIntervalTimer.Stop();
 	}
 
@@ -45,6 +49,15 @@ public partial class WaveSystem : Node
 			waveDuration = 480f;
 		}
 		waveIntervalTimer.Start(waveDuration);
+	}
+
+	public void TryToStartWave()
+	{
+		if(!waveIntervalTimer.IsStopped())
+		{
+			return;
+		}
+		StartNewWave();
 	}
 
 }
