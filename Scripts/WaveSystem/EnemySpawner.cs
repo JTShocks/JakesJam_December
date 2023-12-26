@@ -12,6 +12,7 @@ public partial class EnemySpawner : Node2D
 	public override void _Ready()
 	{
 		AddToGroup("Spawners");
+		
 	}
 
 	public void SpawnEnemy()

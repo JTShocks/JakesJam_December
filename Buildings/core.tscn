@@ -10,14 +10,11 @@ radius = 80.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_opj2e"]
 size = Vector2(86, 54)
 
-[node name="Core" type="Node2D"]
-
-[node name="Core_Main" type="CharacterBody2D" parent="." groups=["Core"]]
+[node name="Core" type="CharacterBody2D" groups=["Core"]]
 collision_layer = 80
-collision_mask = 67
 script = ExtResource("1_yyw11")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Core_Main"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_rttf2")
 
 [node name="UpgradeStation" type="CharacterBody2D" parent="."]

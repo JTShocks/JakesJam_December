@@ -27,6 +27,8 @@ public partial class Enemy_Base : CharacterBody2D, ITakeDamage
             moveSpeed = stats.MoveSpeed;
             currentHealth = stats.MaxHealth;
         }
+
+        
         base._Ready();
         
     }
@@ -53,7 +55,7 @@ public partial class Enemy_Base : CharacterBody2D, ITakeDamage
 
     public void Kill()
     {
-        GetTree().CallGroup("Player", "GetMoney", 25);
+        GetTree().CallGroup("Player", "GetMoney", 5);
         QueueFree();
     }
 

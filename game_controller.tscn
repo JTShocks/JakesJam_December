@@ -5,8 +5,11 @@
 
 [node name="Game Controller" type="Node"]
 
-[node name="Wave System" type="Node" parent="."]
-script = ExtResource("1_phfd4")
-
 [node name="Spawner System" type="Node" parent="."]
 script = ExtResource("2_wj2hi")
+
+[node name="Wave System" type="Node" parent="." groups=["WaveSystem"]]
+script = ExtResource("1_phfd4")
+
+[connection signal="OnNewWaveStart" from="Wave System" to="Spawner System" method="ActivateSpawners"]
+[connection signal="OnWaveEnded" from="Wave System" to="Spawner System" method="DeactivateSpawners"]

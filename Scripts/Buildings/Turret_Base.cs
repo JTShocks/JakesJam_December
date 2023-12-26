@@ -52,18 +52,19 @@ public partial class Turret_Base : CharacterBody2D, IBuilding, ITakeDamage
 	{
 		if(listOfTargets.Count < 1)
 		{
+			currentTarget = null;
 			hasTargets = false;
 			turretShootTimer.Stop();
+			timerHasStarted = false;
 		}
-		else
-		{
+		else{
+
 			hasTargets = true;
-			ReorderTargets();
-			currentTarget = listOfTargets[0];
 		}
 
 		if(hasTargets)
 		{
+			currentTarget = listOfTargets[0];
 			TrackTarget();
 		}
 	}
@@ -85,23 +86,37 @@ public partial class Turret_Base : CharacterBody2D, IBuilding, ITakeDamage
 		}
 		listOfTargets.Add(target);
 		ReorderTargets();
+		if(timerHasStarted == false)
+		{
+			turretShootTimer.Start(shootIntervalInSeconds);
+			timerHasStarted = true;
+		}
 		GD.Print("Target is added");
 		
 
 	}
 	public void OnTargetLeaveRange(PhysicsBody2D target)
 	{
+		if(target is PlayerMovement player)
+		{
+			return;
+		}
 		if(listOfTargets.Contains(target))
 		{
 			listOfTargets.Remove(target);
+			if(listOfTargets.Count > 0)
+			{
 			ReorderTargets();
-			GD.Print("Target removed");
+			}
+
+			GD.Print(target + " removed");
 		}
 
 		if(listOfTargets.Count == 0)
 		{
 			hasTargets = false;
 			turretShootTimer.Stop();
+			GD.Print(this + " has no targets");
 
 		}
 
@@ -116,6 +131,7 @@ public partial class Turret_Base : CharacterBody2D, IBuilding, ITakeDamage
 			tempList.Add(target);
 		}
 		listOfTargets = tempList;
+		currentTarget = listOfTargets[0];
 	}
 
 	public void TrackTarget()
@@ -123,12 +139,6 @@ public partial class Turret_Base : CharacterBody2D, IBuilding, ITakeDamage
 		Vector2 angleToTarget = new();
 		angleToTarget = currentTarget.GlobalPosition - this.GlobalPosition;
 		turretHead.GlobalRotation = MathF.Atan2(angleToTarget.Y, angleToTarget.X);
-
-		if(timerHasStarted == false)
-		{
-			turretShootTimer.Start(shootIntervalInSeconds);
-			timerHasStarted = true;
-		}
 
 	}
 
