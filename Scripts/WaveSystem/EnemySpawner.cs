@@ -1,24 +1,24 @@
 using Godot;
 using System;
 
-public partial class EnemySpawner : Node
+public partial class EnemySpawner : Node2D
 {
-	//What is needed for the enemy spawner?
-	//1. Recieves the signal to begin spawning enemies
-	//2. Can be loaded with any enemy to spawn
-	//3. Spawns the enemy in a given area
+	//All this does is spawn enemies at a given location
 
-	Area2D spawnArea; // Area to spawn the enemies within
+	Timer spawnTimer;
+	float spawnRateInSeconds;
 
 
 	public override void _Ready()
 	{
-		//Add to a group of spawners
+		AddToGroup("Spawners");
 	}
 
-	public void SpawnEnemy(Vector2 spawnLocation)
+	public void SpawnEnemy()
 	{
-		var enemy = GD.Load<PackedScene>("res://Enemy/enemy.tscn").Instantiate() as Node2D;
+		Random rnd = new Random();
+		Vector2 spawnLocation = new Vector2(rnd.Next(-64, 64), rnd.Next(-64, 64)) + GlobalPosition; // Chooses a random spot around the spawner
+		var enemy = GD.Load<PackedScene>("res://Enemy/enemy.tscn").Instantiate() as Node2D; // Load in the enemy as an enemy
 		AddChild(enemy);
 		enemy.GlobalPosition = spawnLocation;
 	}

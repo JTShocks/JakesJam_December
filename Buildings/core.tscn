@@ -4,30 +4,29 @@
 [ext_resource type="Texture2D" uid="uid://kt8kbo58c68w" path="res://Sprites/Core_jam.png" id="2_i5eom"]
 [ext_resource type="Script" path="res://Scripts/Buildings/UpgradeStation.cs" id="2_ywgcy"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_vdeb4"]
-radius = 42.4264
+[sub_resource type="CircleShape2D" id="CircleShape2D_rttf2"]
+radius = 80.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_opj2e"]
-size = Vector2(38, 20)
+size = Vector2(86, 54)
 
 [node name="Core" type="Node2D"]
-scale = Vector2(2, 2)
 
 [node name="Core_Main" type="CharacterBody2D" parent="."]
 collision_layer = 80
-collision_mask = 65
+collision_mask = 67
 script = ExtResource("1_yyw11")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Core_Main"]
-position = Vector2(-0.5, -0.5)
-shape = SubResource("CircleShape2D_vdeb4")
+shape = SubResource("CircleShape2D_rttf2")
 
 [node name="UpgradeStation" type="CharacterBody2D" parent="."]
-position = Vector2(0, 48)
+position = Vector2(0, 72)
 collision_layer = 16
 script = ExtResource("2_ywgcy")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="UpgradeStation"]
+z_index = 1
 shape = SubResource("RectangleShape2D_opj2e")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

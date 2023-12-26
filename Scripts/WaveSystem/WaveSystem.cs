@@ -5,13 +5,15 @@ public partial class WaveSystem : Node
 {
 	[Signal]
 	public delegate void OnNewWaveStartEventHandler(int currentWave);
-	//Anything that listens for the NewWaveStart has the current wave passed through
-	//This is for deciding what enemies to spawn, their numbers, as well as any HUD elements reliant on the current wave
-
 	[Signal]
 	public delegate void OnWaveEndedEventHandler();
-	//Meant as a reciever from the enemy spawners to determine when the wave ended
-	//When all enemies are dead from the new wave, Sends a signal to this
+
+	//Player activates the waves from the Core
+	//The timer for the duration of the wave is based on the current wave
+	//The longer the game goes on, the longer the timer becomes
+	//easy method, check the MOD of the currentWave & increment the wave duration based on that
+	//1 minute until reaching the cap of 8 minutes
+
 
 
 	public Timer waveIntervalTimer = new(); // Timer between each wave
@@ -22,14 +24,14 @@ public partial class WaveSystem : Node
 	{
 		AddChild(waveIntervalTimer);
 		waveIntervalTimer.Timeout += StartNewWave;
-		OnWaveEnded += StartWaveTimer; // When recieving the signal that a wave has ended, start the new timer
+		OnWaveEnded += StopTimer; // When recieving the signal that a wave has ended, start the new timer
 		//For testing purposes
-		StartWaveTimer();
+		//StartWaveTimer();
 	}
-	public void StartWaveTimer()
+	public void StopTimer()
 	{
 		GD.Print("Timer started");
-		waveIntervalTimer.Start(waveTimerDurationInSeconds);
+		waveIntervalTimer.Stop();
 	}
 
 	public void StartNewWave()
@@ -37,12 +39,12 @@ public partial class WaveSystem : Node
 		GD.Print("New wave started");
 		currentWaveCount++;
 		EmitSignal(SignalName.OnNewWaveStart, currentWaveCount);
-		waveIntervalTimer.Stop();
+		float waveDuration = waveTimerDurationInSeconds + (60f*(currentWaveCount/2));
+		if(waveDuration > 480f)
+		{
+			waveDuration = 480f;
+		}
+		waveIntervalTimer.Start(waveDuration);
 	}
 
-	//What does the Wave System need?
-	//1. Timer to decide when to launch the next wave V
-	//2. Keep track of the current wave V
-	//3. Send a signal when a new wave starts V
-	//4. Recieve a signal when the player has defeated the wave V
 }

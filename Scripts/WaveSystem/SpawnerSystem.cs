@@ -1,64 +1,62 @@
 using Godot;
 using System;
+using System.Collections.Generic;
+
 
 public partial class SpawnerSystem : Node
 {
-	// Handles all the sending of signals to spawn the enemies for the wave
-	// Has a personal count of the given wave and what to spawn in (use a simple switch statement)
+	//Calls all spawners in the group to spawn enemies, provided the group is not at the "max" enemies
+	int enemyPopTarget; //The target population of enemies to maintain throughout the wave, also known as the density
+	float waveThreshold = .5f; // The % of enemies that must be killed before the spawners send more creatures to the base.
+	public Timer spawnCycle = new();
+	int waveInterval; // Time between waves in seconds
 
-	private int enemiesToSpawn = 5;
-	private int maxEnemiesAtOneTime;
-	private int currentWaveDeathTotal;
+	//What does this system need to do?
+	//1. Update the strength based on the current wave
+	//2. Keep up the production of waves as the game progresses and the player gets stronger
+	//3. Attack from various directions in groups, not just randomly
+
+
+
+
 
 	public override void _Ready()
 	{
-		//Should recieve a signal for on new wave start
-		// Something for Connect to this as a callable reference
-		//maxEnemiesAtOneTime = some ratio between the # of active spawners and the enemiesToSpawn
-		// perhaps a max of 15 per spawner
+		AddChild(spawnCycle); // Create a timer for the spawner system to decide when to send a new wave
+		spawnCycle.Timeout += TryToSpawnWave; //When it times out, try to spawn a wave
+
 	}
 
-	public void SetCurrentWaveValues(int currentWave)
+	public void TryToSpawnWave() //Tries to spawn an enemy from the spawners at a given time
 	{
-		//Waves increment on base 5, should deal with MOD to determine when to increase
-		int waveMOD = currentWave%10;
-		switch(waveMOD) // based on the MOD of the current wave, can change certain attributes of the following waves
-		// In theory, should make the game mostly infinite until it is physically impossible to beat
-		{   
-			case 1: // Waves 1 and 11, should probably not do anything
-			enemiesToSpawn += 5 + (currentWave/2); // 5 enemies on wave 1, +10 enemies on wave 11
-			break;
-			case 2:
-
-			break;
-
-
-			default:
-			break;
-		}
-	}
-
-	public void TryToSpawnEnemy()
-	{
-		//Function to try to spawn an enemy if the requirements are meant.
-		//If yes, send a signal to an attached spawner to spawn a new enemy
-		// The enemmies to 
-	}
-
-	public void OnEnemyDied() //Called whenever an enemy spawned from the wave group is killed
-	{
-		currentWaveDeathTotal++; // Increment the death counter
-		CheckRemainingEnemies(); // See if the wave should be over
-	}
-
-	public void CheckRemainingEnemies()
-	{
-		if(currentWaveDeathTotal == enemiesToSpawn)
+		var enemies = GetTree().GetNodesInGroup("Aliens").Count; //Get a count of all enemies currently in the scene
+		if(enemies < .5 * enemyPopTarget) //If the number of enemies is below the population target
 		{
-			//EmitSignal(SignalName.OnWaveEnded);
-			//Signal that the current wave has ended
+			SpawnWave(); //Spawn a wave to make up the difference
 		}
+		
 	}
+
+	public void SpawnWave()
+	{
+		//Choose a spawner to spawn a new wave from (only 4 spawners, so 1 of 4 directions)
+		var spawners = GetTree().GetNodesInGroup("Spawners");
+		List<EnemySpawner> tempList = new();
+		foreach(EnemySpawner spawner in spawners)
+		{ //Get the spawners from the group
+			tempList.Add(spawner); //Add them all to a temporary list
+		}
+
+		//Wave comes from a random direction
+		//Spawns a stream of enemies that 
+	}
+
+	public void SetDensityOfSpawns(int currentWave)
+	{
+		//Start small (no more than 16 enemies at one time)
+		
+	}
+
 
 
 }
