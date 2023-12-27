@@ -13,8 +13,11 @@ public partial class Core : CharacterBody2D, ITakeDamage, IInteractable
 
 	[Signal]
 	public delegate void OnCoreInteractEventHandler();
+	[Signal]
+	public delegate void OnCoreTakeDamageEventHandler();
 
-	int currentHealth {get; set;}
+	[Export]
+	public int currentHealth {get; set;}
 	[Export]
 	public int maxHealth = 100;
 	public override void _Ready()
@@ -27,6 +30,7 @@ public partial class Core : CharacterBody2D, ITakeDamage, IInteractable
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+		EmitSignal(SignalName.OnCoreTakeDamage);
     }
 
     public void Interact()

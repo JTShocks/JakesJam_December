@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://b0yckub28nshq" path="res://Sprites/Turret_Base.png" id="5_h4j7e"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vntr6"]
+radius = 384.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_skrg3"]
 size = Vector2(53, 53.5)
@@ -27,11 +28,10 @@ rotation = 1.5708
 texture = ExtResource("3_yugrh")
 
 [node name="GunRay" type="RayCast2D" parent="TurretHead"]
-target_position = Vector2(320, 0)
+target_position = Vector2(384, 0)
 collision_mask = 2
 
 [node name="Detector" type="Node2D" parent="."]
-scale = Vector2(32, 32)
 script = ExtResource("1_75ku0")
 
 [node name="DetectionArea" type="Area2D" parent="Detector"]

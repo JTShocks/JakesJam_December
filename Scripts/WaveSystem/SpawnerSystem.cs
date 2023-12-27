@@ -6,11 +6,12 @@ using System.Collections.Generic;
 public partial class SpawnerSystem : Node
 {
 	//Calls all spawners in the group to spawn enemies, provided the group is not at the "max" enemies
-	int enemyPopTarget; //The target population of enemies to maintain throughout the wave, also known as the density
+	int enemyPopTarget = 20; //The target population of enemies to maintain throughout the wave, also known as the density
 	float waveThreshold = .5f; // The % of enemies that must be killed before the spawners send more creatures to the base.
 	Timer spawnCycle = new();
 	float waveInterval = 30f; // Time between waves in seconds
 	int waveSize;
+
 
 	//What does this system need to do?
 	//1. Update the strength based on the current wave
@@ -26,18 +27,20 @@ public partial class SpawnerSystem : Node
 		AddChild(spawnCycle); // Create a timer for the spawner system to decide when to send a new wave
 		spawnCycle.Timeout += TryToSpawnWave; //When it times out, try to spawn a wave
 
+
 	}
 	public void ActivateSpawners(int currentWave)
 	{
 		SetDensityOfSpawns(currentWave);
-		SpawnWave(waveSize);
+		GetTree().CallGroup("Spawners", "SetActive", true);
 		spawnCycle.Start(waveInterval);
-		GetTree().CallGroup("Core", "SetAsTarget");
+		
 	}
 
 	public void DeactivateSpawners()
 	{
 		spawnCycle.Stop();
+		GetTree().CallGroup("Spawners", "SetActive", false);
 	}
 
 	public void TryToSpawnWave() //Tries to spawn an enemy from the spawners at a given time
@@ -62,7 +65,7 @@ public partial class SpawnerSystem : Node
 		}
 
 		EnemySpawner currentWaveSpawner = tempList[rnd.Next(0, tempList.Count)];
-		for(int i = 0; i <= size; i++)
+		for(int i = 0; i < size; i++)
 		{
 			currentWaveSpawner.SpawnEnemy();
 		}

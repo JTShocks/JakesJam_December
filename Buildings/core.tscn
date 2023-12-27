@@ -13,12 +13,13 @@ size = Vector2(86, 54)
 [node name="Core" type="CharacterBody2D" groups=["Core"]]
 collision_layer = 80
 script = ExtResource("1_yyw11")
+maxHealth = 500
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_rttf2")
 
 [node name="UpgradeStation" type="CharacterBody2D" parent="."]
-position = Vector2(0, 72)
+position = Vector2(0, 80)
 collision_layer = 16
 script = ExtResource("2_ywgcy")
 

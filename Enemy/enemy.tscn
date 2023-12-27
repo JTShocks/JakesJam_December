@@ -1,23 +1,25 @@
-[gd_scene load_steps=6 format=3 uid="uid://bxrfqarbk6l2k"]
+[gd_scene load_steps=7 format=3 uid="uid://bxrfqarbk6l2k"]
 
 [ext_resource type="Script" path="res://Enemy/Enemy_Base.cs" id="1_bw2rx"]
 [ext_resource type="Resource" uid="uid://bpuhls5gik1e0" path="res://Enemy/EnemyStats.tres" id="2_4is35"]
 [ext_resource type="Texture2D" uid="uid://cignqwdnfoyty" path="res://Sprites/Enemy.png" id="3_01hto"]
-[ext_resource type="Script" path="res://Player/HealthSystem.cs" id="3_lsa5r"]
+[ext_resource type="Script" path="res://Scripts/Buildings/Detector.cs" id="4_k4mfa"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bedc1"]
-size = Vector2(65, 68)
+size = Vector2(53.1667, 55.3333)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pi7xs"]
+radius = 128.0
 
 [node name="Enemy" type="Node2D"]
 
 [node name="EnemyBody" type="CharacterBody2D" parent="." groups=["Aliens"]]
 collision_layer = 2
-collision_mask = 79
+collision_mask = 77
 script = ExtResource("1_bw2rx")
 characterStats = ExtResource("2_4is35")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyBody"]
-position = Vector2(0.5, 1)
 scale = Vector2(0.75, 0.75)
 shape = SubResource("RectangleShape2D_bedc1")
 
@@ -26,5 +28,21 @@ rotation = 4.71239
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("3_01hto")
 
-[node name="HealthSystem" type="Node" parent="EnemyBody"]
-script = ExtResource("3_lsa5r")
+[node name="AttackRay" type="RayCast2D" parent="EnemyBody"]
+target_position = Vector2(32, 0)
+collision_mask = 65
+
+[node name="Detector" type="Node2D" parent="EnemyBody"]
+script = ExtResource("4_k4mfa")
+
+[node name="DetectorArea" type="Area2D" parent="EnemyBody/Detector"]
+collision_layer = 0
+collision_mask = 65
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyBody/Detector/DetectorArea"]
+shape = SubResource("CircleShape2D_pi7xs")
+
+[connection signal="EnemyEnterRange" from="EnemyBody/Detector" to="EnemyBody" method="OnBodyEnterRange"]
+[connection signal="EnemyLeaveRange" from="EnemyBody/Detector" to="EnemyBody" method="OnBodyLeaveRange"]
+[connection signal="body_entered" from="EnemyBody/Detector/DetectorArea" to="EnemyBody/Detector" method="_on_detection_area_body_entered"]
+[connection signal="body_exited" from="EnemyBody/Detector/DetectorArea" to="EnemyBody/Detector" method="_on_detection_area_body_exited"]

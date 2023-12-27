@@ -5,5 +5,6 @@
 [resource]
 script = ExtResource("1_wyt58")
 _characterFaction = 1
-MaxHealth = 50
+MaxHealth = 50.0
 MoveSpeed = 200
+BaseDamage = 5.0

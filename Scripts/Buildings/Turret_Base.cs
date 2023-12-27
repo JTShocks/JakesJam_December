@@ -25,7 +25,7 @@ public partial class Turret_Base : CharacterBody2D, IBuilding, ITakeDamage
 	int totalBuildingValue;
 	int upgradePrice {get; set;}
 	int buildingLevel = 1;
-	int repairPrice {get; set;}
+	float repairPrice {get; set;}
 
 
 	Node2D turretHead;
@@ -158,7 +158,10 @@ public partial class Turret_Base : CharacterBody2D, IBuilding, ITakeDamage
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
-		repairPrice = baseStats.BaseHealth - (baseStats.BaseHealth* (currentHealth/baseStats.BaseHealth));
+		//Repair price = % of base price based on currentHealth to maxHealth
+		float percentHealthRemaining = (float)currentHealth/baseStats.BaseHealth;
+		GD.Print(percentHealthRemaining);
+		repairPrice = baseStats.BaseHealth*(1-percentHealthRemaining);
 		if(currentHealth <= 0)
 		{
 			Kill();
@@ -203,7 +206,7 @@ public partial class Turret_Base : CharacterBody2D, IBuilding, ITakeDamage
 			GD.Print("Building is full health");
 			return;
 		}
-		GetTree().CallGroup("Player", "LoseMoney", repairPrice);
+		GetTree().CallGroup("Player", "LoseMoney", (int)repairPrice);
 		RepairBuilding();
     }
 
