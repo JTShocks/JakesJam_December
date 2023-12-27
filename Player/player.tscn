@@ -11,6 +11,7 @@
 radius = 26.1725
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ngxui"]
+radius = 24.0
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_mask = 79
@@ -34,21 +35,21 @@ texture = ExtResource("4_qvgtk")
 script = ExtResource("5_rp2qw")
 
 [node name="GunRay" type="RayCast2D" parent="PlayerHead/GunWeapon"]
-target_position = Vector2(500, 0)
+target_position = Vector2(700, 0)
 collision_mask = 6
 
-[node name="Interactor" type="Node2D" parent="."]
+[node name="Interactor" type="Node2D" parent="PlayerHead" node_paths=PackedStringArray("player")]
+position = Vector2(64, 0)
 script = ExtResource("6_oetcy")
+player = NodePath("../..")
 
-[node name="InteractorArea" type="Area2D" parent="Interactor"]
-position = Vector2(32, 0)
-scale = Vector2(3, 3)
+[node name="InteractorArea" type="Area2D" parent="PlayerHead/Interactor"]
 collision_layer = 0
-collision_mask = 48
+collision_mask = 80
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactor/InteractorArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerHead/Interactor/InteractorArea"]
 shape = SubResource("CircleShape2D_ngxui")
 
 [connection signal="UpdateWeapon" from="." to="PlayerHead" method="_on_player_update_weapon"]
-[connection signal="body_entered" from="Interactor/InteractorArea" to="Interactor" method="OnEnterArea"]
-[connection signal="body_exited" from="Interactor/InteractorArea" to="Interactor" method="OnLeaveArea"]
+[connection signal="body_entered" from="PlayerHead/Interactor/InteractorArea" to="PlayerHead/Interactor" method="OnEnterArea"]
+[connection signal="body_exited" from="PlayerHead/Interactor/InteractorArea" to="PlayerHead/Interactor" method="OnLeaveArea"]

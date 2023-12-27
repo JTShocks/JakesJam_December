@@ -22,7 +22,7 @@ func _process(_delta):
 	wave_timer = wave_info.waveIntervalTimer
 	wave_number = wave_info.currentWaveCount
 	
-	health.text = "Player Health: " + str(player_stats.MaxHealth)
+	health.text = "Player Health: " + str(player.currentHealth)
 	wave_display.text = "Wave: " + str(wave_number)
 	wave_interval_timer.text = "Time Until Next Wave: " + str(snappedf(wave_timer.time_left, 1))
 	cash.text = "Total Cash:" + str(player_info_node.playerMoney)

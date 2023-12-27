@@ -44,23 +44,20 @@ position = Vector2(864, 33)
 [node name="BuildSpot2" parent="AllBuildSpots" instance=ExtResource("7_bw3sa")]
 position = Vector2(1056, -162)
 
+[node name="BuildSpot3" parent="AllBuildSpots" instance=ExtResource("7_bw3sa")]
+position = Vector2(353, -480)
+
 [node name="BuildSpot4" parent="AllBuildSpots" instance=ExtResource("7_bw3sa")]
-position = Vector2(1058, -483)
+position = Vector2(545, -675)
 
 [node name="BuildSpot5" parent="AllBuildSpots" instance=ExtResource("7_bw3sa")]
-position = Vector2(862, -674)
+position = Vector2(353, -160)
 
 [node name="BuildSpot6" parent="AllBuildSpots" instance=ExtResource("7_bw3sa")]
-position = Vector2(543, -672)
+position = Vector2(867, -673)
 
 [node name="BuildSpot7" parent="AllBuildSpots" instance=ExtResource("7_bw3sa")]
-position = Vector2(355, -479)
-
-[node name="BuildSpot8" parent="AllBuildSpots" instance=ExtResource("7_bw3sa")]
-position = Vector2(352, -162)
-
-[node name="BuildSpot3" parent="AllBuildSpots" instance=ExtResource("7_bw3sa")]
-position = Vector2(548, 34)
+position = Vector2(1059, -483)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

@@ -31,7 +31,6 @@ public partial class Detector : Node
 
     public void _on_detection_area_body_exited(PhysicsBody2D body)
     {
-        GD.Print("Target out of range");
         EmitSignal("EnemyLeaveRange", body);
         //Remove the target from the list
     }

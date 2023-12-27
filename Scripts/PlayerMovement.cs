@@ -16,7 +16,7 @@ public partial class PlayerMovement : CharacterBody2D, ITakeDamage
 
     int moveSpeed {get; set;}
     float maxHealth {get; set;}
-    int currentHealth;
+    public float currentHealth;
     float baseDamage {get; set;}
     public int playerLevel = 1;
     int levelCap = 6;
@@ -81,6 +81,7 @@ public partial class PlayerMovement : CharacterBody2D, ITakeDamage
             characterData.BaseDamage += (int)newDamage;
             SetStats(characterData);
 
+
         }
 
     }
@@ -92,6 +93,7 @@ public partial class PlayerMovement : CharacterBody2D, ITakeDamage
             GD.Print("Max Health: " + maxHealth);
             GD.Print("Movespeed: " + moveSpeed);
             GD.Print("Base Damage: " + baseDamage);
+                    currentHealth = maxHealth;
             EmitSignal(SignalName.UpdateWeapon, baseDamage);
             
 
@@ -99,11 +101,7 @@ public partial class PlayerMovement : CharacterBody2D, ITakeDamage
 
     public void TakeDamage(int damage)
     {
-        throw new NotImplementedException();
+        currentHealth -= damage;
     }
 
-    public void TakeDamage(int damage, GodotObject source)
-    {
-        throw new NotImplementedException();
-    }
 }

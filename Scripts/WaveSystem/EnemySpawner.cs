@@ -4,15 +4,29 @@ using System;
 public partial class EnemySpawner : Node2D
 {
 	//All this does is spawn enemies at a given location
-
-	Timer spawnTimer;
-	float spawnRateInSeconds;
+	bool spawnerIsActive;
+	Timer pesterTimer = new();
+	float pesterInterval = 10f;
 
 
 	public override void _Ready()
 	{
 		AddToGroup("Spawners");
+		AddChild(pesterTimer);
+		pesterTimer.Timeout += SpawnEnemy; //Every couple moments or so, spawn some enemies;
 		
+	}
+
+	public void SetActive(bool isActive)
+	{
+		if(isActive)
+		{
+			pesterTimer.Start(pesterInterval);
+		}
+		else
+		{
+			pesterTimer.Stop();
+		}
 	}
 
 	public void SpawnEnemy()

@@ -5,13 +5,13 @@ using System.Collections.Generic;
 public partial class Interactor : Node
 {
 
-    PhysicsBody2D interactTarget;
+    Node2D interactTarget;
+    [Export]
     public PlayerMovement player;
-
     public override void _Ready()
     {
         base._Ready();
-        player = GetParent().GetParent().GetNode<PlayerMovement>("Player");
+       
 
     }
 
@@ -41,16 +41,22 @@ public partial class Interactor : Node
 
 
 
-    public void OnEnterArea(PhysicsBody2D target)
+    public void OnEnterArea(Node2D target)
     {
+
+        GD.Print(target + " entered the range");
         if(target is Enemy_Base enemy)
         {
             return;
         }
-        interactTarget = target;
+        if(target is CharacterBody2D body)
+        {
+            interactTarget = target;
+        }
+
     }
 
-    public void OnLeaveArea(PhysicsBody2D target)
+    public void OnLeaveArea(Node2D target)
     {
         if(target == interactTarget)
         {
