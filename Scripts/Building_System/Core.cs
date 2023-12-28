@@ -15,6 +15,8 @@ public partial class Core : CharacterBody2D, ITakeDamage, IInteractable
 	public delegate void OnCoreInteractEventHandler();
 	[Signal]
 	public delegate void OnCoreTakeDamageEventHandler();
+	[Signal]
+	public delegate void OnCoreDestroyedEventHandler();
 
 	[Export]
 	public int currentHealth {get; set;}
@@ -31,6 +33,10 @@ public partial class Core : CharacterBody2D, ITakeDamage, IInteractable
     {
         currentHealth -= damage;
 		EmitSignal(SignalName.OnCoreTakeDamage);
+		if(currentHealth <= 0)
+		{
+			EmitSignal(SignalName.OnCoreDestroyed);
+		}
     }
 
     public void Interact()

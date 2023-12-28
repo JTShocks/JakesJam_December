@@ -12,6 +12,9 @@ public partial class PlayerMovement : CharacterBody2D, ITakeDamage
     [Signal]
     public delegate void UpdateWeaponEventHandler(int newDamage);
 
+    [Signal]
+    public delegate void OnPlayerDeathEventHandler();
+
 
 
     int moveSpeed {get; set;}
@@ -20,6 +23,7 @@ public partial class PlayerMovement : CharacterBody2D, ITakeDamage
     float baseDamage {get; set;}
     public int playerLevel = 1;
     int levelCap = 6;
+
 
     [Export]
     public int playerMoney;
@@ -102,6 +106,19 @@ public partial class PlayerMovement : CharacterBody2D, ITakeDamage
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+        if(currentHealth <= 0)
+        {
+            Kill();
+
+        }
     }
+
+    public void Kill()
+    {
+        EmitSignal(SignalName.OnPlayerDeath);
+        QueueFree();
+    }
+
+
 
 }

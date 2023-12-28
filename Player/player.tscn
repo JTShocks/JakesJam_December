@@ -21,9 +21,6 @@ characterData = ExtResource("2_jg336")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_gdjbo")
 
-[node name="PlayerCamera" type="Camera2D" parent="."]
-zoom = Vector2(1.4, 1.4)
-
 [node name="PlayerHead" type="Node2D" parent="."]
 script = ExtResource("4_3xtjs")
 
