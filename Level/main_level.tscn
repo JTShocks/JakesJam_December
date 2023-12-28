@@ -1,7 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://xt37akotcxly"]
+[gd_scene load_steps=10 format=3 uid="uid://xt37akotcxly"]
 
 [ext_resource type="PackedScene" uid="uid://c7ml3peoafg3h" path="res://Player/player.tscn" id="1_qu4hu"]
 [ext_resource type="TileSet" uid="uid://cs5ndrc62y3b0" path="res://Level/main_level.tres" id="2_0ifrj"]
+[ext_resource type="Script" path="res://Scripts/RespawnSystem.cs" id="2_o7dtl"]
+[ext_resource type="Script" path="res://Scripts/MainCamera.cs" id="3_msh4w"]
 [ext_resource type="PackedScene" uid="uid://vyjx3kcrbs4s" path="res://Buildings/build_spot.tscn" id="7_bw3sa"]
 [ext_resource type="PackedScene" uid="uid://cnias40cmsen6" path="res://UI/main_ui.tscn" id="7_fh68l"]
 [ext_resource type="PackedScene" uid="uid://bv34ld7kabnjk" path="res://Scripts/WaveSystem/wave_system.tscn" id="7_fypao"]
@@ -9,6 +11,18 @@
 [ext_resource type="PackedScene" uid="uid://db74hw4mtug3l" path="res://Buildings/core.tscn" id="8_sg1t4"]
 
 [node name="main_Level" type="Node2D"]
+
+[node name="WaveSystem" parent="." instance=ExtResource("7_fypao")]
+
+[node name="RespawnSystem" type="Node" parent="." node_paths=PackedStringArray("respawnPoint")]
+script = ExtResource("2_o7dtl")
+respawnPoint = NodePath("RespawnPoint")
+
+[node name="RespawnPoint" type="Node2D" parent="RespawnSystem"]
+position = Vector2(704, -157)
+
+[node name="Main Camera" type="Camera2D" parent="."]
+script = ExtResource("3_msh4w")
 
 [node name="Player" parent="." instance=ExtResource("1_qu4hu")]
 z_index = 1
@@ -80,7 +94,5 @@ position = Vector2(710, 768)
 [node name="EnemySpawner4" parent="." instance=ExtResource("8_fncfu")]
 position = Vector2(1796, -320)
 
-[node name="WaveSystem" parent="." instance=ExtResource("7_fypao")]
-
-[connection signal="OnCoreInteract" from="Core" to="WaveSystem" method="TryToStartWave"]
 [connection signal="EndOfWaveReward" from="WaveSystem" to="Player" method="GetMoney"]
+[connection signal="OnCoreInteract" from="Core" to="WaveSystem" method="TryToStartWave"]
