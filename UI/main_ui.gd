@@ -17,8 +17,6 @@ var wave_number : int
 
 # TODO: Ask where the Cash info is kept.
 # TODO Ask where wave number is kept.
-func _ready():
-	player_info_node = get_parent().get_parent().get_node("Player")
 func _process(_delta):
  #spawner_system.enemiesToSpawn
 	wave_timer = wave_info.waveIntervalTimer
