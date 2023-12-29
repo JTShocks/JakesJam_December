@@ -1,27 +1,35 @@
-[gd_scene load_steps=9 format=3 uid="uid://blt56opdf6dc5"]
+[gd_scene load_steps=11 format=3 uid="uid://blt56opdf6dc5"]
 
 [ext_resource type="Script" path="res://Scripts/Buildings/Detector.cs" id="1_75ku0"]
 [ext_resource type="Script" path="res://Scripts/Buildings/Turret_Base.cs" id="1_u4pq7"]
 [ext_resource type="Script" path="res://Scripts/Buildings/Gun_Weapon.cs" id="2_finuo"]
 [ext_resource type="Resource" uid="uid://cc5yua2xlwfvn" path="res://Scripts/Buildings/turretBaseStats.tres" id="2_ybd7h"]
 [ext_resource type="Texture2D" uid="uid://co2joq02ybk7x" path="res://Sprites/Turret_Head.png" id="3_yugrh"]
+[ext_resource type="PackedScene" uid="uid://ci3lxndgmoi8k" path="res://Sprites/gunshot.tscn" id="4_h5dyu"]
 [ext_resource type="Texture2D" uid="uid://b0yckub28nshq" path="res://Sprites/Turret_Base.png" id="5_h4j7e"]
+[ext_resource type="Script" path="res://UI/TurretUI.cs" id="7_lgv18"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vntr6"]
 radius = 384.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_skrg3"]
-size = Vector2(53, 53.5)
+size = Vector2(64, 64)
 
 [node name="Turret" type="CharacterBody2D" groups=["PlayerBuilding"]]
 collision_layer = 80
 collision_mask = 3
+input_pickable = true
 script = ExtResource("1_u4pq7")
 baseStats = ExtResource("2_ybd7h")
 
-[node name="TurretHead" type="Node2D" parent="."]
+[node name="TurretHead" type="Node2D" parent="." node_paths=PackedStringArray("gunshot")]
 z_index = 1
 script = ExtResource("2_finuo")
+gunshot = NodePath("Gunshot")
+
+[node name="Gunshot" parent="TurretHead" instance=ExtResource("4_h5dyu")]
+position = Vector2(48, 0)
+rotation = 1.5708
 
 [node name="TurretSprite" type="Sprite2D" parent="TurretHead"]
 rotation = 1.5708
@@ -45,8 +53,54 @@ shape = SubResource("CircleShape2D_vntr6")
 texture = ExtResource("5_h4j7e")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2.625)
 shape = SubResource("RectangleShape2D_skrg3")
 
+[node name="TurretUI" type="Control" parent="." node_paths=PackedStringArray("turret", "turretHUD")]
+visible = false
+layout_mode = 3
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+script = ExtResource("7_lgv18")
+turret = NodePath("..")
+turretHUD = NodePath("PanelContainer/VBoxContainer")
+
+[node name="PanelContainer" type="PanelContainer" parent="TurretUI"]
+layout_mode = 0
+offset_left = -30.0
+offset_top = -96.0
+offset_right = 70.0
+offset_bottom = -56.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TurretUI/PanelContainer"]
+layout_mode = 2
+
+[node name="Level" type="RichTextLabel" parent="TurretUI/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 12
+text = "Level
+"
+fit_content = true
+
+[node name="Health" type="RichTextLabel" parent="TurretUI/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 12
+text = "Health
+"
+fit_content = true
+
+[node name="UpgradeCost" type="RichTextLabel" parent="TurretUI/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 12
+text = "Upgrade
+"
+fit_content = true
+
+[connection signal="mouse_entered" from="." to="TurretUI" method="EnableDisplay"]
+[connection signal="mouse_exited" from="." to="TurretUI" method="DisableDisplay"]
 [connection signal="EnemyEnterRange" from="Detector" to="." method="OnTargetEnterRange"]
 [connection signal="EnemyLeaveRange" from="Detector" to="." method="OnTargetLeaveRange"]
 [connection signal="body_entered" from="Detector/DetectionArea" to="Detector" method="_on_detection_area_body_entered"]

@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://ci3lxndgmoi8k"]
+
+[ext_resource type="Texture2D" uid="uid://71pm0kn324ur" path="res://Sprites/gunshot.png" id="1_uvbnq"]
+
+[node name="Gunshot" type="CPUParticles2D"]
+emitting = false
+amount = 1
+lifetime = 0.05
+one_shot = true
+explosiveness = 0.14
+local_coords = true
+texture = ExtResource("1_uvbnq")
+direction = Vector2(0, 0)
+spread = 0.0
+gravity = Vector2(0, 0)

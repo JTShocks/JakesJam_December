@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bs1pbhqam2vcr"
-path="res://.godot/imported/Jam_tiles2.png-27b325d810bffb509c76a0d7db754bcd.ctex"
+uid="uid://71pm0kn324ur"
+path="res://.godot/imported/gunshot.png-35b1ac3a70f6ab778d2735ab22b7f71b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Jam_tiles2.png"
-dest_files=["res://.godot/imported/Jam_tiles2.png-27b325d810bffb509c76a0d7db754bcd.ctex"]
+source_file="res://Sprites/gunshot.png"
+dest_files=["res://.godot/imported/gunshot.png-35b1ac3a70f6ab778d2735ab22b7f71b.ctex"]
 
 [params]
 

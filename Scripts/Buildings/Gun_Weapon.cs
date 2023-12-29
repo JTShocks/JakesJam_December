@@ -4,7 +4,11 @@ using System;
 public partial class Gun_Weapon : Node2D, IDoDamage
 {
 
+    [Signal]
+    public delegate void OnWeaponFiredEventHandler();
     int baseDamage = 10;
+    [Export]
+    public CpuParticles2D gunshot;
     RayCast2D gunRay;
     public override void _Ready()
     {
@@ -16,6 +20,8 @@ public partial class Gun_Weapon : Node2D, IDoDamage
 
     public void DoDamage(int damage)
     {
+        EmitSignal(SignalName.OnWeaponFired);
+        gunshot.Emitting = true;
         if(damage == 0)
         {
             damage = baseDamage;

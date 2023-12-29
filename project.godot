@@ -11,9 +11,9 @@ config_version=5
 [application]
 
 config/name="Week2_DeathworldOutpost"
-run/main_scene="res://Level/main_level.tscn"
+run/main_scene="res://Level/level_switcher.tscn"
 config/features=PackedStringArray("4.1", "C#", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="res://Sprites/UpdatePlayer_jam.png"
 
 [autoload]
 

@@ -13,11 +13,15 @@ public partial class BuildSpot : CharacterBody2D, IInteractable
 
 	public Turret_Base placedBuilding;
 
+	CollisionShape2D collision;
+
     //Subscribes to the events present within the placed building
 
     public override void _Ready()
     {
         base._Ready();
+		collision = GetNode<CollisionShape2D>("CollisionShape2D");
+
 		//OnInteract();
     }
 
@@ -43,12 +47,14 @@ public partial class BuildSpot : CharacterBody2D, IInteractable
 
 		// Space holds a reference to the node
 		spaceOccupied = true;
+		collision.Disabled = true;
 	}
 
 	public void OnBuildingDestroyed()
 	{
 		placedBuilding.QueueFree();
 		spaceOccupied = false;
+		collision.Disabled = false;
 	}
 
 	public void TryPlaceBuilding(int currentMoney)

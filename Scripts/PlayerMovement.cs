@@ -12,9 +12,6 @@ public partial class PlayerMovement : CharacterBody2D, ITakeDamage
     [Signal]
     public delegate void UpdateWeaponEventHandler(int newDamage);
 
-    [Signal]
-    public delegate void OnPlayerDeathEventHandler();
-
 
 
     int moveSpeed {get; set;}
@@ -24,17 +21,25 @@ public partial class PlayerMovement : CharacterBody2D, ITakeDamage
     public int playerLevel = 1;
     int levelCap = 6;
 
+    bool isKnockedDown = false;
+
 
     [Export]
     public int playerMoney;
 
     Vector2 inputDirection;
+    Timer getUpTimer;
 
 
     public override void _Ready()
     {
         AddToGroup("Player");
         SetStats(characterData);
+        getUpTimer = new Timer{
+            OneShot = true
+        };
+        AddChild(getUpTimer);
+        getUpTimer.Timeout += GetUp; // when the timer times out, the player gets back up
 
 
         EnemyKilled += GetMoney;
@@ -43,8 +48,12 @@ public partial class PlayerMovement : CharacterBody2D, ITakeDamage
 
     public override void _Process(double delta)
     {
+        if(!isKnockedDown)
+        {
         GetInput();
-        this.MoveAndCollide(inputDirection * moveSpeed * (float)delta);   
+        this.MoveAndCollide(inputDirection * moveSpeed * (float)delta); 
+        }
+  
     }
 
     public void GetInput()
@@ -105,18 +114,31 @@ public partial class PlayerMovement : CharacterBody2D, ITakeDamage
 
     public void TakeDamage(int damage)
     {
+      
+        if(currentHealth > 0)
+        {
         currentHealth -= damage;
+        }
+
         if(currentHealth <= 0)
         {
-            Kill();
+            KnockDown();
 
         }
     }
 
-    public void Kill()
+    public void KnockDown()
     {
-        EmitSignal(SignalName.OnPlayerDeath);
-        QueueFree();
+
+        getUpTimer.Start(10);
+        isKnockedDown = true;
+
+    }
+
+    public void GetUp()
+    {
+        isKnockedDown = false;
+        currentHealth = maxHealth/2;
     }
 
 

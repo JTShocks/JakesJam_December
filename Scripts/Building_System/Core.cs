@@ -20,8 +20,7 @@ public partial class Core : CharacterBody2D, ITakeDamage, IInteractable
 
 	[Export]
 	public int currentHealth {get; set;}
-	[Export]
-	public int maxHealth = 100;
+	public int maxHealth = 500;
 	public override void _Ready()
 	{
 		currentHealth = maxHealth;
@@ -31,8 +30,13 @@ public partial class Core : CharacterBody2D, ITakeDamage, IInteractable
 
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage;
+		int reducedDamage = damage - 3;
+		if(currentHealth > 0)
+		{
+        currentHealth -= reducedDamage;
 		EmitSignal(SignalName.OnCoreTakeDamage);
+		}
+
 		if(currentHealth <= 0)
 		{
 			EmitSignal(SignalName.OnCoreDestroyed);
