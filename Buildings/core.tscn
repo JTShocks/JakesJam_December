@@ -1,22 +1,24 @@
-[gd_scene load_steps=6 format=3 uid="uid://db74hw4mtug3l"]
+[gd_scene load_steps=7 format=3 uid="uid://db74hw4mtug3l"]
 
 [ext_resource type="Script" path="res://Scripts/Building_System/Core.cs" id="1_yyw11"]
 [ext_resource type="Texture2D" uid="uid://kt8kbo58c68w" path="res://Sprites/Core_jam.png" id="2_i5eom"]
 [ext_resource type="Script" path="res://Scripts/Buildings/UpgradeStation.cs" id="2_ywgcy"]
+[ext_resource type="Script" path="res://UI/CoreUI.cs" id="4_tld2f"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_rttf2"]
-radius = 80.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xiawv"]
+size = Vector2(144, 130)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_opj2e"]
 size = Vector2(86, 54)
 
 [node name="Core" type="CharacterBody2D" groups=["Core"]]
 collision_layer = 80
+input_pickable = true
 script = ExtResource("1_yyw11")
-maxHealth = 500
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_rttf2")
+position = Vector2(-1, -5)
+shape = SubResource("RectangleShape2D_xiawv")
 
 [node name="UpgradeStation" type="CharacterBody2D" parent="."]
 position = Vector2(0, 80)
@@ -25,7 +27,38 @@ script = ExtResource("2_ywgcy")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="UpgradeStation"]
 z_index = 1
+position = Vector2(0, 10)
 shape = SubResource("RectangleShape2D_opj2e")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_i5eom")
+
+[node name="CoreUI" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+script = ExtResource("4_tld2f")
+
+[node name="PanelContainer" type="PanelContainer" parent="CoreUI"]
+layout_mode = 0
+offset_left = -30.0
+offset_top = -96.0
+offset_right = 70.0
+offset_bottom = -56.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CoreUI/PanelContainer"]
+layout_mode = 2
+
+[node name="Level" type="RichTextLabel" parent="CoreUI/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 12
+text = "Press 'E' to start next wave
+"
+fit_content = true
+
+[connection signal="mouse_entered" from="." to="CoreUI" method="_on_core_mouse_entered"]
+[connection signal="mouse_exited" from="." to="CoreUI" method="_on_core_mouse_exited"]

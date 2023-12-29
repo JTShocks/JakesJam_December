@@ -20,11 +20,11 @@ public partial class Turret_Base : CharacterBody2D, IBuilding, ITakeDamage
 	[Export]
 	public BuildingStats baseStats;
 
-	int currentHealth {get; set;}
+	public int currentHealth {get; set;}
 
 	int totalBuildingValue;
-	int upgradePrice {get; set;}
-	int buildingLevel = 1;
+	public int upgradePrice {get; set;}
+	public int buildingLevel = 1;
 	float repairPrice {get; set;}
 
 
@@ -230,4 +230,5 @@ public partial class Turret_Base : CharacterBody2D, IBuilding, ITakeDamage
 		}
 		currentHealth = baseStats.BaseHealth;
 	}
+
 }

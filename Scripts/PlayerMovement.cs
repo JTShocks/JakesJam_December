@@ -114,7 +114,12 @@ public partial class PlayerMovement : CharacterBody2D, ITakeDamage
 
     public void TakeDamage(int damage)
     {
+      
+        if(currentHealth > 0)
+        {
         currentHealth -= damage;
+        }
+
         if(currentHealth <= 0)
         {
             KnockDown();

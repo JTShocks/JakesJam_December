@@ -5,9 +5,11 @@ var player_stats := preload("res://Scripts/WaveSystem/PlayerStats.tres")
 @onready var wave_display := $"PanelContainer/VBoxContainer/Wave Number"
 @onready var wave_interval_timer := $"PanelContainer/VBoxContainer/Wave Interval Timer"
 @onready var cash := $PanelContainer/VBoxContainer/Cash
+@onready var core_health := $"PanelContainer/VBoxContainer/CoreHealth"
 
 @export var wave_system : Node
 @export var player : CharacterBody2D
+@export var core : CharacterBody2D
 
 @onready var wave_info = wave_system
 #@onready var spawner_system  = game_controller.get_node("Spawner System")
@@ -26,3 +28,4 @@ func _process(_delta):
 	wave_display.text = "Wave: " + str(wave_number)
 	wave_interval_timer.text = "Time Until Next Wave: " + str(snappedf(wave_timer.time_left, 1))
 	cash.text = "Total Cash:" + str(player_info_node.playerMoney)
+	core_health.text = "Core Health: " + str(core.currentHealth)
