@@ -109,6 +109,11 @@ public partial class Enemy_Base : CharacterBody2D, ITakeDamage
     public void TakeDamage(int damage)
     {
       currentHealth -= damage;
+        var bloodspray = GD.Load<PackedScene>("res://Sprites/bloodsplat.tscn").Instantiate() as CpuParticles2D;
+        AddChild(bloodspray);
+        bloodspray.ZIndex = -1;
+      bloodspray.GlobalPosition = this.GlobalPosition;
+      bloodspray.Emitting = true;
       //Set out a pulse to all allies in a range around them to converge on the same target
       if(currentHealth <= 0)
       {

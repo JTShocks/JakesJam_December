@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://1hkjf1ihdejq"]
+
+[ext_resource type="Texture2D" uid="uid://dvjsw8hymnqpk" path="res://Sprites/bug_blood_splat.png" id="1_eguac"]
+
+[node name="Bloodsplat" type="CPUParticles2D"]
+emitting = false
+amount = 3
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+texture = ExtResource("1_eguac")
+emission_shape = 1
+emission_sphere_radius = 64.0
+gravity = Vector2(0, 0)
+scale_amount_max = 2.0

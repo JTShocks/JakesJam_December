@@ -10,9 +10,16 @@ public partial class PlayerWeaponController : Node2D
 	public IDoDamage equippedWeapon;
 	public int weaponDamage = 0;
 
+	public float weaponFireRate = .16f;
+	Timer weaponShootTimer;
+
 	public override void _Ready()
 	{
 		equippedWeapon = GetNode<Node2D>("GunWeapon") as IDoDamage;
+		weaponShootTimer = new Timer{
+			OneShot = true
+		};
+		AddChild(weaponShootTimer);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -21,7 +28,7 @@ public partial class PlayerWeaponController : Node2D
 		Vector2 lookDirection = GetGlobalMousePosition() - this.GlobalPosition;
 		this.GlobalRotation = Mathf.Atan2(lookDirection.Y, lookDirection.X);
 
-		if(Input.IsActionJustPressed("Shoot"))
+		if(Input.IsActionPressed("Shoot"))
 		{
 			TryToShoot();
 		}
@@ -29,7 +36,12 @@ public partial class PlayerWeaponController : Node2D
 
 	public void TryToShoot()
 	{
-		equippedWeapon?.DoDamage(weaponDamage);
+		if(weaponShootTimer.IsStopped())
+		{
+			equippedWeapon?.DoDamage(weaponDamage);
+			weaponShootTimer.Start(weaponFireRate);
+		}
+
 	}
 
 	public void _on_player_update_weapon(int newDamage)

@@ -29,11 +29,13 @@ public partial class PlayerMovement : CharacterBody2D, ITakeDamage
 
     Vector2 inputDirection;
     Timer getUpTimer;
+    Camera2D playerCamera;
 
 
     public override void _Ready()
     {
         AddToGroup("Player");
+        playerCamera = GetNode<Camera2D>("Camera2D");
         SetStats(characterData);
         getUpTimer = new Timer{
             OneShot = true
@@ -53,6 +55,8 @@ public partial class PlayerMovement : CharacterBody2D, ITakeDamage
         GetInput();
         this.MoveAndCollide(inputDirection * moveSpeed * (float)delta); 
         }
+        Vector2 mousePos = GetGlobalMousePosition();
+        playerCamera.GlobalPosition = this.GlobalPosition.Lerp(mousePos, 0.15f);
   
     }
 

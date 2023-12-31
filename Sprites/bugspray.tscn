@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://is5kqrmpnaoy"]
+
+[ext_resource type="Texture2D" uid="uid://b0msu7pwlf70k" path="res://Sprites/bug_hit_burst.png" id="1_71mwx"]
+
+[sub_resource type="Curve" id="Curve_ynymx"]
+min_value = -360.0
+max_value = 360.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="bugspray" type="CPUParticles2D"]
+scale = Vector2(3, 3)
+emitting = false
+amount = 1
+lifetime = 0.5
+one_shot = true
+texture = ExtResource("1_71mwx")
+gravity = Vector2(0, 0)
+angle_max = 360.0
+angle_curve = SubResource("Curve_ynymx")

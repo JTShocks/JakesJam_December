@@ -9,6 +9,8 @@ public partial class Gun_Weapon : Node2D, IDoDamage
     int baseDamage = 10;
     [Export]
     public CpuParticles2D gunshot;
+    [Export]
+    public CpuParticles2D onHiteffect;
     RayCast2D gunRay;
     public override void _Ready()
     {
